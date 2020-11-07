@@ -31,13 +31,21 @@ const routes = [
     component: () => import(/* webpackChunkName: "user" */ "../views/User.vue"),
   },
   {
-    path: "*",
-    component: () => import("../views/404"),
-  },
-  {
     path: "/list",
     name: "List",
     component: () => import("../views/List.vue"),
+    path: "/logo",
+    name: "Logo",
+    component: () => import(/* webpackChunkName: "user" */ "../views/Logo.vue"),
+  },
+  {
+    path: "/reg",
+    name: "Reg",
+    component: () => import(/* webpackChunkName: "user" */ "../views/Reg.vue"),
+  },
+  {
+    path: "*",
+    component: () => import("../views/404"),
   },
 ];
 
