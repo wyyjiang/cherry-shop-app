@@ -34,17 +34,25 @@ const routes = [
     path: "/list",
     name: "List",
     component: () => import("../views/List.vue"),
+  },
+  {
+    path: "/detail",
+    name: "Detail",
+    component: () => import("../views/Detail.vue"),
+  },
+  {
     path: "/logo",
     name: "Logo",
-    component: () => import(/* webpackChunkName: "user" */ "../views/Logo.vue"),
+    component: () => import("../views/Logo.vue"),
   },
   {
     path: "/reg",
     name: "Reg",
-    component: () => import(/* webpackChunkName: "user" */ "../views/Reg.vue"),
+    component: () => import("../views/Reg.vue"),
   },
   {
     path: "*",
+    name: "404",
     component: () => import("../views/404"),
   },
 ];

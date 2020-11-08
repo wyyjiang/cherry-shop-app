@@ -3,10 +3,23 @@ import ElementUI from "element-ui"; // 引入element-ui
 import Vant from "vant"; // 引入vant
 import App from "./App.vue";
 import router from "./router";
+import {
+  CouponCell,
+  CouponList,
+  GoodsAction,
+  GoodsActionIcon,
+  GoodsActionButton,
+} from "vant";
+
+Vue.use(CouponCell);
+Vue.use(CouponList);
+Vue.use(GoodsAction);
+Vue.use(GoodsActionButton);
+Vue.use(GoodsActionIcon);
 
 import { serverUrl } from "@/utils/tools";
 Vue.use(Vant);
-// Vue.use(NavBar);
+
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
