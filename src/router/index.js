@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 // import { isLogined } from "@/utils/tools";
 import Home from "../views/Home.vue";
+// import { Toast } from "vant";
 
 Vue.use(VueRouter);
 
@@ -14,31 +15,48 @@ const routes = [
   {
     path: "/classify",
     name: "Classify",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "classify" */ "../views/Classify.vue"),
   },
   {
     path: "/cart",
     name: "Cart",
-    component: () => import(/* webpackChunkName: "cart" */ "../views/Cart.vue"),
+    component: () => import("../views/Cart.vue"),
   },
   {
     path: "/user",
     name: "User",
-    component: () => import(/* webpackChunkName: "user" */ "../views/User.vue"),
+    component: () => import("../views/User.vue"),
   },
   {
-    path: "/logo",
-    name: "Logo",
-    component: () => import(/* webpackChunkName: "user" */ "../views/Logo.vue"),
+    path: "/search",
+    name: "Search",
+    component: () => import("../views/Search.vue"),
+  },
+  {
+    path: "/list",
+    name: "List",
+    component: () => import("../views/List.vue"),
+  },
+  {
+    path: "/detail",
+    name: "Detail",
+    component: () => import("../views/Detail.vue"),
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
   },
   {
     path: "/reg",
     name: "Reg",
-    component: () => import(/* webpackChunkName: "user" */ "../views/Reg.vue"),
+    component: () => import("../views/Reg.vue"),
+  },
+  {
+    path: "*",
+    name: "404",
+    component: () => import("../views/404"),
   },
   {
     path: "/addresslist",

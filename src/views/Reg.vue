@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <div ><img src="../assets/cherry-logo.png" alt="" /></div>
+    <div><img src="../assets/cherry-logo.png" alt="" /></div>
     <div>
       <el-form
         :model="ruleForm"
@@ -35,7 +35,9 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="root"><router-link :to="{ name: 'Logo' }">已有账号,请登录</router-link></div>
+    <div class="root">
+      <router-link :to="{ name: 'Login' }">已有账号,请登录</router-link>
+    </div>
   </div>
 </template>
 
@@ -117,7 +119,7 @@ export default {
 .logo img {
   width: 40%;
 }
-.root{
-    float: right;
+.root {
+  float: right;
 }
 </style>
