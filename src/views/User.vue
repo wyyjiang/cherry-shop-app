@@ -17,28 +17,29 @@
     </div>
     <div class="big_conter">
       <div class="conter">
-        <div><i class="el-icon-present"></i><span>收藏</span></div>
+        <div><i class="el-icon-present"></i><span>收藏商品</span></div>
         <i class="el-icon-arrow-right"></i>
       </div>
       <div class="conter_childer">
         <div class="conter">
-        <div><i class="el-icon-present"></i><span>收藏</span></div>
-        <i class="el-icon-arrow-right"></i>
-      </div>
-         <div class="conter">
-        <div><i class="el-icon-present"></i><span>收藏</span></div>
-        <i class="el-icon-arrow-right"></i>
-      </div>
-       <div class="conter">
-        <div><i class="el-icon-present"></i><span>收藏</span></div>
-        <i class="el-icon-arrow-right"></i>
-      </div>
+          <div><i class="el-icon-present"></i><span>待付款</span></div>
+          <i class="el-icon-arrow-right"></i>
+        </div>
         <div class="conter">
-        <div><i class="el-icon-present"></i><span>收藏</span></div>
-        <i class="el-icon-arrow-right"></i>
+          <div><i class="el-icon-present"></i><span>全部订单</span></div>
+          <i class="el-icon-arrow-right"></i>
+        </div>
+        <div class="conter">
+          <div><i class="el-icon-present"></i><span>收获地址管理</span></div>
+          <i class="el-icon-arrow-right"></i>
+        </div>
+         <div class="conter">
+          <div><i class="el-icon-present"></i><span>关于我们</span></div>
+          <i class="el-icon-arrow-right"></i>
+        </div>
       </div>
-      </div>
-     <div class="conter">
+      
+      <div class="conter">
         <div><i class="el-icon-present"></i><span>退出登录</span></div>
         <i class="el-icon-arrow-right"></i>
       </div>
@@ -84,14 +85,14 @@ export default {};
   padding: 0 10px;
   margin: 5px 0;
 }
-.conter_childer .conter{
+.conter_childer .conter {
   margin: 0;
 }
-.conter div span{
+.conter div span {
   font-size: 15px;
 }
-.conter div i{
- display: inline-block;
+.conter div i {
+  display: inline-block;
   margin-right: 6px;
 }
 </style>
