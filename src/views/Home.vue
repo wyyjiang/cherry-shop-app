@@ -13,7 +13,7 @@
     <div class="banner">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
         <van-swipe-item v-for="item in banners" :key="item.goods_id"
-          ><img :src="item.image_src" alt=""
+          ><img @click="toDetail(item.goods_id)" :src="item.image_src" alt=""
         /></van-swipe-item>
       </van-swipe>
     </div>
@@ -40,10 +40,26 @@
             <img :src="item.product_list[0].image_src" alt="" />
           </div>
           <div class="floor_item_pic_right">
-            <img :src="item.product_list[1].image_src" alt="" />
-            <img :src="item.product_list[2].image_src" alt="" />
-            <img :src="item.product_list[3].image_src" alt="" />
-            <img :src="item.product_list[4].image_src" alt="" />
+            <img
+              @click="toList(item.product_list[1].name)"
+              :src="item.product_list[1].image_src"
+              alt=""
+            />
+            <img
+              @click="toList(item.product_list[2].name)"
+              :src="item.product_list[2].image_src"
+              alt=""
+            />
+            <img
+              @click="toList(item.product_list[3].name)"
+              :src="item.product_list[3].image_src"
+              alt=""
+            />
+            <img
+              @click="toList(item.product_list[4].name)"
+              :src="item.product_list[4].image_src"
+              alt=""
+            />
           </div>
         </div>
       </div>
@@ -65,13 +81,55 @@ export default {
   },
   methods: {
     toUser() {
-      location.href = "http://localhost:8080/#/user";
+      this.$router.push({
+        name: "User",
+      });
     },
     toSearch() {
-      location.href = "http://localhost:8080/#/search";
+      this.$router.push({
+        name: "Search",
+      });
     },
     toClassify() {
-      location.href = "http://localhost:8080/#/classify";
+      this.$router.push({
+        name: "Classify",
+      });
+    },
+    toList(name) {
+      if (
+        name == "春季热门" ||
+        name == "爆款清仓" ||
+        name == "倒春寒" ||
+        name == "怦然心动"
+      ) {
+        name = "衣服";
+      } else if (name == "超强手套") {
+        name = "手套";
+      } else if (name == "冲锋衣系列") {
+        name = "冲锋衣";
+      } else if (name == "户外登山包") {
+        name = "登山包";
+      } else if (name == "户外运动鞋") {
+        name = "运动鞋";
+      } else if (name == "复古胸针") {
+        name = "胸针";
+      } else if (name == "韩版手链") {
+        name = "手链";
+      }
+      this.$router.push({
+        name: "List",
+        query: {
+          query: name,
+        },
+      });
+    },
+    toDetail(id) {
+      this.$router.push({
+        name: "Detail",
+        query: {
+          id,
+        },
+      });
     },
   },
   components: {},

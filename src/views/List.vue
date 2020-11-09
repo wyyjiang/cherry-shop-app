@@ -6,7 +6,7 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <van-nav-bar :fixed="false" title="商品列表" left-text="返回" left-arrow>
+      <van-nav-bar :fixed="false" title="商品列表" left-arrow>
         <template #right> </template>
       </van-nav-bar>
       <van-search v-model="value" placeholder="  搜索" />

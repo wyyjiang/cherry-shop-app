@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
     <router-link route :to="{ name: 'List' }"
-      ><van-nav-bar title="商品详情" left-text="返回" left-arrow>
+      ><van-nav-bar title="商品详情" left-arrow>
         <template #right> </template> </van-nav-bar
     ></router-link>
     <!-- <van-card

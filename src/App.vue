@@ -55,5 +55,6 @@ html {
 .content {
   flex: 1;
   overflow: auto;
+  overflow-x: hidden;
 }
 </style>
