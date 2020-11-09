@@ -11,6 +11,12 @@
 
     <div class="content">
       <img class="picture" :src="goods.goods_big_logo | dalImg" alt="" />
+      <!-- <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+        <van-swipe-item v-for="item in goods" :key="item.goods_id"
+          ><img @click="toDetail(item.goods_id)" :src="item.image_src" alt=""
+        /></van-swipe-item>
+      </van-swipe> -->
+
       <div class="content_header">
         <div class="content_left">
           <h1>￥{{ goods.goods_price }}</h1>
