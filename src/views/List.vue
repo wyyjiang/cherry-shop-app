@@ -1,15 +1,23 @@
 <template>
-  <div class="header">
+  <div class="list">
     <van-list
       v-model="loading"
       :finished="finished"
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <van-nav-bar :fixed="false" title="商品列表" left-arrow>
-        <template #right> </template>
-      </van-nav-bar>
-      <van-search v-model="value" placeholder="  搜索" />
+      <div class="header">
+        <van-nav-bar
+          class="list_main"
+          title="商品列表"
+          left-arrow
+          @click-left="returnRef"
+        ></van-nav-bar>
+      </div>
+      <div class="search">
+        <van-search v-model="value" placeholder="  搜索" />
+      </div>
+
       <!-- <router-link
         :to="{
           name: 'Detail',
@@ -70,6 +78,9 @@ export default {
     };
   },
   methods: {
+    returnRef() {
+      history.back(-1);
+    },
     onLoad() {
       this.loadData();
     },
@@ -93,6 +104,9 @@ export default {
 </script>
 
 <style scoped>
+.list_main {
+  background-color: #ffc7c7;
+}
 h1,
 h3,
 h4,

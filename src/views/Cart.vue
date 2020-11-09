@@ -1,5 +1,7 @@
 <template>
-  <h1>购物车</h1>
+  <div class="cart">
+    
+  </div>
 </template>
 
 <script>
