@@ -18,7 +18,7 @@
         @input="searchInput"
       >
       </el-input>
-      <el-button type="danger" size="small">搜索</el-button>
+      <el-button type="danger" size="small" @click="toList">搜索</el-button>
     </div>
     <div class="search_result">
       <div
@@ -69,6 +69,16 @@ export default {
           id,
         },
       });
+    },
+    toList() {
+      if (this.input) {
+        this.$router.push({
+          name: "List",
+          query: {
+            query: this.input,
+          },
+        });
+      }
     },
   },
 };

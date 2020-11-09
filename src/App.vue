@@ -55,5 +55,10 @@ html {
 .content {
   flex: 1;
   overflow: auto;
+  overflow-x: hidden;
+}
+/* 返回按钮的颜色 */
+.van-nav-bar .van-icon {
+  color: #931a25;
 }
 </style>

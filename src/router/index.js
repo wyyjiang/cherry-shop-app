@@ -54,6 +54,11 @@ const routes = [
     component: () => import("../views/Reg.vue"),
   },
   {
+    path: "/collect",
+    name: "Collect",
+    component: () => import("../views/Collect.vue"),
+  },
+  {
     path: "*",
     name: "404",
     component: () => import("../views/404"),

@@ -11,7 +11,7 @@
     </div>
     <div class="classify_content">
       <div class="classify_content_left">
-        <van-sidebar v-model="activeKey" @change="onChange">
+        <van-sidebar v-model="activeKey">
           <van-sidebar-item
             :title="item.cat_name"
             v-for="item in classifys"
@@ -39,6 +39,7 @@
               :key="icon.cat_id"
               :icon="icon.cat_icon"
               :text="icon.cat_name"
+              @click="toList(icon.cat_id)"
             />
           </van-grid>
         </div>
@@ -60,9 +61,17 @@ export default {
   },
   methods: {
     toSearch() {
-      location.href = "http://localhost:8080/#/search";
+      this.$router.push({
+        name: "Search",
+      });
     },
-    onChange() {
+    toList(cat_id) {
+      this.$router.push({
+        name: "List",
+        query: {
+          cid: cat_id,
+        },
+      });
     },
   },
   async created() {
