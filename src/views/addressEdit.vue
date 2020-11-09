@@ -1,8 +1,8 @@
 <template>
   <div class="address">
+    <van-nav-bar  left-arrow @click-left="onClickLeft" />
     <van-address-edit
       :area-list="areaList"
-      show-postal
       show-delete
       show-set-default
       show-search-result
@@ -12,31 +12,32 @@
       @delete="onDelete"
       @change-detail="onChangeDetail"
     />
-    <van-area
-      title="标题"
-      :area-list="areaList"
-      :columns-placeholder="['请选择', '请选择', '请选择']"
-    />
   </div>
 </template>
 
 <script>
 import { Toast } from "vant";
-import {areaList} from "./areaList"
+import { areaList } from "../utils/areaList";
+import {list} from "../utils/list"
 export default {
   data() {
     return {
       areaList,
-
       searchResult: [],
+      list,
     };
   },
   methods: {
-    onSave() {
+    onSave(e) {
       Toast("save");
+      console.log(e);
+      
     },
     onDelete() {
       Toast("delete");
+    },
+    onClickLeft() {
+      history.back(-1);
     },
     onChangeDetail(val) {
       if (val) {

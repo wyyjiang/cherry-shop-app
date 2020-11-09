@@ -61,12 +61,17 @@ const routes = [
   {
     path: "/addresslist",
     name: "addressList",
-    component: () => import(/* webpackChunkName: "user" */ "../views/addressList.vue"),
+    component: () => import( "../views/addressList.vue"),
   },
   {
     path: "/addressedit",
     name: "addressEdit",
-    component: () => import(/* webpackChunkName: "user" */ "../views/addressEdit.vue"),
+    component: () => import( "../views/addressEdit.vue"),
+  },
+  {
+    path: "/amend",
+    name: "amend",
+    component: () => import( "../views/amend.vue"),
   },
 ];
 
