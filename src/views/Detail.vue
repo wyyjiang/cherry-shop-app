@@ -10,20 +10,28 @@
     </div>
 
     <div class="content">
-      <img class="picture" :src="goods.goods_big_logo" alt="" />
-      <h1>
-        ￥{{ goods.goods_price }}
-        <div class="buy">明天00:00开抢</div>
-        <van-count-down :time="time">
-          <template #default="timeData">
-            <span class="block">{{ timeData.hours }}</span>
-            <span class="colon">:</span>
-            <span class="block">{{ timeData.minutes }}</span>
-            <span class="colon">:</span>
-            <span class="block">{{ timeData.seconds }}</span>
-          </template>
-        </van-count-down>
-      </h1>
+      <img class="picture" :src="goods.goods_big_logo | dalImg" alt="" />
+      <div class="content_header">
+        <div class="content_left">
+          <h1>￥{{ goods.goods_price }}</h1>
+        </div>
+        <div class="content_right">
+          <div class="buy">明天00:00开抢</div>
+          <van-count-down :time="time">
+            <template #default="timeData">
+              <span class="block">{{ timeData.hours }}</span>
+              <span class="colon">:</span>
+              <span class="block">{{ timeData.minutes }}</span>
+              <span class="colon">:</span>
+              <span class="block">{{ timeData.seconds }}</span>
+            </template>
+          </van-count-down>
+        </div>
+      </div>
+      <van-notice-bar
+        left-icon="volume-o"
+        text="双11特卖，大牌来袭，买400减40，蓄力待发,双十一我们来了! 一年如一日,勇攀销量顶峰。 备战六个月,只为双十一。 今天很残酷,明天更残酷,但双十一很美好。"
+      />
       <h2>{{ goods.goods_name }}</h2>
       <p>
         【11.11抢先购】大牌来袭，部分商品满400减40！
@@ -72,7 +80,7 @@
       <van-goods-action :fixed="false">
         <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" />
         <van-goods-action-icon icon="cart-o" text="购物车" />
-        <van-goods-action-icon icon="star" text="已收藏" color="#ff5000" />
+        <van-goods-action-icon icon="star" text="已收藏" />
         <van-goods-action-button type="warning" text="加入购物车" />
         <van-goods-action-button type="danger" text="立即购买" />
       </van-goods-action>
@@ -82,17 +90,6 @@
 
 <script>
 import { get } from "@/utils/request.js";
-// const coupon = {
-//   available: 1,
-//   condition: "无使用门槛\n最多优惠12元",
-//   reason: "",
-//   value: 150,
-//   name: "优惠券名称",
-//   startAt: 1489104000,
-//   endAt: 1514592000,
-//   valueDesc: "1.5",
-//   unitDesc: "元",
-// };
 
 export default {
   data() {
@@ -152,9 +149,9 @@ export default {
   overflow: hidden;
 }
 .content .picture {
-  width: 95%;
-  height: 18.5rem;
-  margin-left: 0.4rem;
+  width: 94%;
+  height: 58%;
+  margin-left: 0.7rem;
 }
 .content h2 {
   font-size: 17px;
@@ -162,15 +159,20 @@ export default {
   font-weight: 700;
   margin: 0.5rem;
 }
-.content h1 {
-  /* margin: 0.5rem; */
+.content_header {
   color: rgb(252, 250, 250);
-  /* font-weight: 700; */
+  height: 60px;
   font-size: 18px;
   background: #26a96d;
   padding: 0.6rem;
-  /* line-height: 60px; */
-  /* height: 60px; */
+  display: flex;
+}
+.content_main {
+}
+h1 {
+  font-size: 20px;
+  display: inline-block;
+  line-height: 60px;
 }
 .picture1 {
   width: 100%;
@@ -200,17 +202,19 @@ span {
   color: #e93b3d;
 }
 .buy {
+  /* display: block; */
   font-size: 0.6rem;
   color: red;
-  margin-left: 10.6rem;
-  display: inline-block;
-  margin-top: -13px;
+  margin-left: 12rem;
+  display: inline;
+  margin-bottom: 15px;
+  /* margin-top: -13px; */
 }
 
 .van-count-down {
-  margin-top: 5px;
-  margin-left: 215px;
-  display: inline-block;
+  display: inline;
+  margin-top: 15px;
+  margin-left: 170px;
 }
 .colon {
   display: inline-block;
@@ -226,11 +230,11 @@ span {
   background-color: #664347;
 }
 .serve {
-  background-color: rgb(253, 250, 244);
-  border-radius: 10px;
+  background-color: rgb(255, 249, 236);
+  border-radius: 13px;
 }
 ul li {
-  padding: 5px;
+  padding: 2px 10px 5px 10px;
   display: inline-block;
   line-height: 1;
   color: #8c8c8c;
