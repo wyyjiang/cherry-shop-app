@@ -14,8 +14,12 @@
           @click-left="returnRef"
         ></van-nav-bar>
       </div>
-      <div class="search">
-        <van-search v-model="value" placeholder="  搜索" />
+      <div class="search" @click="toSearch">
+        <van-search
+          v-model="value"
+          placeholder="  搜索"
+          @click-left="returnRef"
+        />
       </div>
 
       <!-- <router-link
@@ -47,14 +51,15 @@
         </div>
         <div class="box_right">
           <h3>{{ item.goods_name }}</h3>
-          <van-rate
+          <!-- <van-rate
             class="start"
             v-model="values"
             allow-half
             void-icon="star"
             void-color="#eee"
-          />
+          /> -->
           <p>￥{{ item.goods_price.toFixed(2) }}</p>
+          <van-button type="danger">加入购物车</van-button>
         </div>
       </div>
     </van-list>
@@ -78,6 +83,11 @@ export default {
     };
   },
   methods: {
+    toSearch() {
+      this.$router.push({
+        name: "Search",
+      });
+    },
     returnRef() {
       history.back(-1);
     },
@@ -85,9 +95,16 @@ export default {
       this.loadData();
     },
     async loadData() {
+      var params = {};
+      if (this.$route.query.query) {
+        params = { query: this.$route.query.query };
+      } else if (this.$route.query.cid) {
+        params = { cid: this.$route.query.cid };
+      }
+      console.log(params);
       this.loading = true;
       // this.$route.query.page = this.pagenum;
-      await get("/api/public/v1/goods/search").then((res) => {
+      await get("/api/public/v1/goods/search", params).then((res) => {
         this.goods = res.data.message.goods;
         // console.log(this.goods);
       });
@@ -137,7 +154,7 @@ p {
   height: 100%;
 }
 .box_right {
-  height: 10rem;
+  height: 11rem;
   overflow: hidden;
   margin-left: 1.3rem;
 }
@@ -155,6 +172,13 @@ p {
   color: red;
   text-indent: 0.5rem;
   margin-top: 0.5rem;
-  margin-left: 2rem;
+  margin-left: 1rem;
+}
+.van-button--normal {
+  padding: 0 9px;
+  margin-left: 100px;
+}
+.van-button {
+  height: 33px;
 }
 </style>
