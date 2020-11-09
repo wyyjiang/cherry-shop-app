@@ -36,7 +36,25 @@
         >
         </van-card>
       </router-link> -->
-      <div class="dabox" v-for="item in goods" :key="item.goods_id">
+
+      <van-card
+        v-for="item in goods"
+        :key="item.goods_id"
+        :price="item.goods_price.toFixed(2)"
+        desc="描述信息"
+        :title="item.goods_name"
+        :thumb="item.goods_big_logo | dalImg"
+        @click="toDetail(item.goods_id)"
+      >
+        <template #footer>
+          <van-button size="mini">加入购物车</van-button>
+          <van-button size="mini">按钮</van-button>
+        </template>
+      </van-card>
+
+      <!-- <div class="dabox
+      
+      " v-for="item in goods" :key="item.goods_id">
         <div class="box_left">
           <router-link
             :to="{
@@ -51,22 +69,15 @@
         </div>
         <div class="box_right">
           <h3>{{ item.goods_name }}</h3>
-          <!-- <van-rate
-            class="start"
-            v-model="values"
-            allow-half
-            void-icon="star"
-            void-color="#eee"
-          /> -->
+
           <p>￥{{ item.goods_price.toFixed(2) }}</p>
           <van-button type="danger">加入购物车</van-button>
         </div>
-      </div>
+      </div> -->
     </van-list>
     <router-view />
   </div>
 </template>
-
 
 <script>
 import { get } from "@/utils/request";
@@ -93,6 +104,14 @@ export default {
     },
     onLoad() {
       this.loadData();
+    },
+    toDetail(item) {
+      this.$router.push({
+        name: "Detail",
+        query: {
+          id: item,
+        },
+      });
     },
     async loadData() {
       var params = {};
