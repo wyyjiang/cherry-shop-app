@@ -47,14 +47,15 @@
         </div>
         <div class="box_right">
           <h3>{{ item.goods_name }}</h3>
-          <van-rate
+          <!-- <van-rate
             class="start"
             v-model="values"
             allow-half
             void-icon="star"
             void-color="#eee"
-          />
+          /> -->
           <p>￥{{ item.goods_price.toFixed(2) }}</p>
+          <van-button type="danger">加入购物车</van-button>
         </div>
       </div>
     </van-list>
@@ -100,6 +101,7 @@ export default {
     //   location.href = "http://localhost:8080/#/Detail?" + item.goods_id;
     // },
   },
+ 
 };
 </script>
 
@@ -151,10 +153,14 @@ p {
   margin-left: 2rem;
 }
 .box_right p {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: red;
   text-indent: 0.5rem;
   margin-top: 0.5rem;
   margin-left: 2rem;
+}
+.van-button--normal {
+  padding: 0 10px;
+  margin-left: 100px;
 }
 </style>
