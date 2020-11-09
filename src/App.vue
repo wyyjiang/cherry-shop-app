@@ -1,7 +1,18 @@
 <template>
   <div id="app">
     <router-view class="content" />
-    <van-tabbar :fixed="false" route v-model="active" active-color="deeppink">
+    <van-tabbar
+      v-if="
+        this.$route.path == '/' ||
+        this.$route.path == '/classify' ||
+        this.$route.path == '/cart' ||
+        this.$route.path == '/user'
+      "
+      :fixed="false"
+      route
+      v-model="active"
+      active-color="deeppink"
+    >
       <van-tabbar-item icon="wap-home-o" :to="{ name: 'Home' }"
         >首页</van-tabbar-item
       >
