@@ -80,6 +80,16 @@ const routes = [
     component: () => import("../views/amend.vue"),
   },
   {
+    path: "/chat",
+    name: "Chat",
+    component: () => import("../views/Chat.vue"),
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: () => import("../views/About.vue"),
+  },
+  {
     path: "*",
     name: "404",
     component: () => import("../views/404"),

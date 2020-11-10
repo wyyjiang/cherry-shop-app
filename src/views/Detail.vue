@@ -11,10 +11,6 @@
 
     <div class="content">
       <img class="picture" :src="goods.goods_big_logo | dalImg" alt="" />
-      <!-- <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="item in goods" :key="item.pics_id">
-        </van-swipe-item>
-      </van-swipe> -->
 
       <div class="content_header">
         <div class="content_left">
@@ -22,15 +18,6 @@
         </div>
         <div class="content_right">
           <div class="buy">促销中</div>
-          <!-- <van-count-down :time="time">
-            <template #default="timeData">
-              <span class="block">{{ timeData.hours }}</span>
-              <span class="colon">:</span>
-              <span class="block">{{ timeData.minutes }}</span>
-              <span class="colon">:</span>
-              <span class="block">{{ timeData.seconds }}</span>
-            </template>
-          </van-count-down> -->
         </div>
       </div>
       <van-notice-bar
@@ -118,12 +105,12 @@ export default {
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
     this.goods = res.data.message;
-    console.log(this.goods);
+    // console.log(this.goods);
     const res1 = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
     this.list = res1.data.message.goods_introduce;
-    console.log(this.list);
+    // console.log(this.list);
     var product_text = document.querySelector(".p_introduce_main");
     product_text.innerHTML = this.list;
   },

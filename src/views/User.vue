@@ -61,9 +61,7 @@ import { getToken, removeToken } from "@/utils/tools.js";
 export default {
   name: "user",
   data() {
-    return {
-      
-    };
+    return {};
   },
   methods: {
     afterRead(file) {
@@ -78,11 +76,11 @@ export default {
       });
     },
   },
-  created(){
-    this.$eventBus.$on("username",()=>{
-      this.names=getToken()
-    })
-  }
+  created() {
+    this.$eventBus.$on("username", () => {
+      this.names = getToken();
+    });
+  },
 };
 </script>
 
