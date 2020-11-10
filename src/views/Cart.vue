@@ -33,11 +33,7 @@
                 <input class="checkbox_one" type="checkbox" />
               </template>
               <template #footer>
-                <el-input-number
-                  v-model="num"
-                  :min="1"
-                  size="mini"
-                ></el-input-number>
+                <van-stepper v-model="num" disable-input />
                 <van-button type="danger">删除</van-button>
               </template>
             </van-card>
