@@ -175,8 +175,6 @@ export default {
   padding: 0.6rem;
   display: flex;
 }
-.content_main {
-}
 h1 {
   font-size: 20px;
   display: inline-block;

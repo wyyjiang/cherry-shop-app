@@ -3,6 +3,9 @@ import ElementUI from "element-ui"; // 引入element-ui
 import Vant from "vant"; // 引入vant
 import App from "./App.vue";
 import router from "./router";
+
+var eventBus = new Vue();
+Vue.prototype.$eventBus = eventBus;
 // import {
 //   CouponCell,
 //   CouponList,

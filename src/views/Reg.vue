@@ -42,8 +42,10 @@
 
 <script>
 import { Notify } from "vant";
-import { regAPI } from "@/services/auth";
-import { setToken } from "@/utils/tools";
+// import { regAPI } from "@/services/auth";
+import {regAPI} from "@/services/user"
+// import { setToken } from "@/utils/tools";
+// import { setUser } from "@/utils/user";
 export default {
   data() {
     return {
@@ -53,7 +55,7 @@ export default {
     };
   },
   methods: {
-    async onSubmit(values) {
+     onSubmit() {
       if (this.password != this.repwd) {
         Notify({
           type: "warning",
@@ -61,20 +63,13 @@ export default {
         });
         return;
       }
-      // console.log(values);
-      const u = await regAPI(values);
-      if (u.code === "success") {
-        setToken(u.data.data.id);
-        this.$router.push({
-          name: "User",
-        });
-      } else {
-        Notify({
+      else{
+        regAPI(this.username,this.password)
+           Notify({
           type: "warning",
-          message: u.data.msg,
+          message: regAPI().message,
         });
       }
-      console.log(u);
     },
   },
 };

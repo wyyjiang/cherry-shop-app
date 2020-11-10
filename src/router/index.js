@@ -65,19 +65,19 @@ const routes = [
     component: () => import("../views/Collect.vue"),
   },
   {
-    path: "/addresslist",
-    name: "addressList",
-    component: () => import("../views/addressList.vue"),
+    path: "/aboutUs",
+    name: "AboutUs",
+    component: () => import("../views/AboutUs.vue"),
   },
   {
-    path: "/addressedit",
-    name: "addressEdit",
-    component: () => import("../views/addressEdit.vue"),
+    path: "/service",
+    name: "Service",
+    component: () => import("../views/Service.vue"),
   },
   {
-    path: "/amend",
-    name: "amend",
-    component: () => import("../views/amend.vue"),
+    path: "/change",
+    name: "Change",
+    component: () => import("../views/ChangePassword.vue"),
   },
   {
     path: "*",
