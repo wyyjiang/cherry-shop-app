@@ -36,10 +36,12 @@ Vue.filter("dalImg", (val) => {
     }
   } else {
     // 没有图片的话设置默认图片
-    return "http://image1.suning.cn/uimg/b2c/newcatentries/0000000000-000000000601395527_1_400x400.jpg";
+    return "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2241501882,276530757&fm=26&gp=0.jpg";
   }
 });
 new Vue({
   router,
   render: (h) => h(App),
 }).$mount("#app");
+
+

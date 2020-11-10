@@ -1,11 +1,7 @@
 <template>
   <!-- 登录 -->
   <div class="reg">
-    <img
-      style="width:70%;"
-      src="../assets/cherry5.jpg"
-      alt=""
-    />
+    <img style="width: 70%" src="../assets/cherry5.jpg" alt="" />
     <van-form @submit="onSubmit">
       <van-field
         v-model="username"
@@ -22,7 +18,7 @@
         placeholder="密码"
         :rules="[{ required: true, message: '请填写密码' }]"
       />
-      <div style="margin: 16px;">
+      <div style="margin: 16px">
         <van-button round block type="info" native-type="submit">
           提交
         </van-button>
@@ -34,9 +30,9 @@
 
 <script>
 import { Notify } from "vant";
-import { loginAPI } from "@/services/auth";
+// import { loginAPI } from "@/services/auth";
 import { setToken} from "@/utils/tools";
-
+import { loginAPI } from "@/services/user";
 export default {
   data() {
     return {
@@ -45,18 +41,17 @@ export default {
     };
   },
   methods: {
-    async onSubmit(values) {
-      // this.$eventBus.$emit("usernames","123")
-      const u = await loginAPI(values);
-      if (u.data.code == 1) {
-        setToken(u.data.data.id);
+     onSubmit() {
+     const u =  loginAPI(this.username,this.password);
+      if (u.code == 1) {
+        setToken(this.username);
         this.$router.push({
           name: "Home",
         });
       } else {
         Notify({
           type: "warning",
-          message: u.data.msg,
+          message: u.message,
         });
       }
       // console.log(u);

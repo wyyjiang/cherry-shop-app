@@ -134,14 +134,19 @@ export default {
   },
   components: {},
   async created() {
+    if (!localStorage.getItem("user")) {
+      var user = {};
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+
     await get("/api/public/v1/home/swiperdata").then((res) => {
       this.banners = res.data.message;
     });
-    // console.log(this.banners);
     await get("/api/public/v1/home/catitems").then((res) => {
-      this.navs = res.data.message;
+      if (res.data.message) {
+        this.navs = res.data.message;
+      }
     });
-    // console.log(this.navs);
     await get("/api/public/v1/home/floordata").then((res) => {
       this.floors = res.data.message;
     });
