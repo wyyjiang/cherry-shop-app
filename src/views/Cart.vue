@@ -21,23 +21,27 @@
           </el-card>
         </div>
         <div class="product">
-          <van-card
-            price="2.00"
-            desc="描述信息"
-            title="商品标题"
-            thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
-          >
-            <template #tag>
-              <input class="checkbox_one" type="checkbox" />
-            </template>
-            <template #footer>
-              <el-input-number
-                v-model="num"
-                :min="1"
-                size="mini"
-              ></el-input-number>
-            </template>
-          </van-card>
+          <div class="item">
+            <van-card
+              price="2.00"
+              desc="描述信息"
+              title="商品标题"
+              thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+              class="goods-card"
+            >
+              <template #tag>
+                <input class="checkbox_one" type="checkbox" />
+              </template>
+              <template #footer>
+                <el-input-number
+                  v-model="num"
+                  :min="1"
+                  size="mini"
+                ></el-input-number>
+                <van-button type="danger">删除</van-button>
+              </template>
+            </van-card>
+          </div>
         </div>
       </div>
     </div>
@@ -144,4 +148,7 @@ export default {
 .van-submit-bar {
   position: static;
 }
+/* .delete-button { */
+/* height: 100%; */
+/* } */
 </style>
