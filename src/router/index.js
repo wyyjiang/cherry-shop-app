@@ -59,24 +59,24 @@ const routes = [
     component: () => import("../views/Collect.vue"),
   },
   {
-    path: "*",
-    name: "404",
-    component: () => import("../views/404"),
-  },
-  {
     path: "/addresslist",
     name: "addressList",
-    component: () => import( "../views/addressList.vue"),
+    component: () => import("../views/addressList.vue"),
   },
   {
     path: "/addressedit",
     name: "addressEdit",
-    component: () => import( "../views/addressEdit.vue"),
+    component: () => import("../views/addressEdit.vue"),
   },
   {
     path: "/amend",
     name: "amend",
-    component: () => import( "../views/amend.vue"),
+    component: () => import("../views/amend.vue"),
+  },
+  {
+    path: "*",
+    name: "404",
+    component: () => import("../views/404"),
   },
 ];
 

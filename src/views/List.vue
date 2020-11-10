@@ -21,7 +21,39 @@
           @click-left="returnRef"
         />
       </div>
-      <div class="dabox" v-for="item in goods" :key="item.goods_id">
+
+      <!-- <router-link
+        :to="{
+          name: 'Detail',
+        }"
+      >
+        <van-card
+          v-for="item in goods"
+          :key="item.goods_id"
+          :price="item.goods_price.toFixed(2)"
+          :title="item.goods_name"
+          :thumb="item.goods_big_logo | dalImg"
+        >
+        </van-card>
+      </router-link> -->
+
+      <van-card
+        v-for="item in goods"
+        :key="item.goods_id"
+        :price="item.goods_price.toFixed(2)"
+        desc="描述信息"
+        :title="item.goods_name"
+        :thumb="item.goods_big_logo | dalImg"
+        @click="toDetail(item.goods_id)"
+      >
+        <template #footer>
+          <van-button size="mini" @click="toCart(e)">加入购物车</van-button>
+        </template>
+      </van-card>
+
+      <!-- <div class="dabox
+      
+      " v-for="item in goods" :key="item.goods_id">
         <div class="box_left">
           <router-link
             :to="{
@@ -36,22 +68,15 @@
         </div>
         <div class="box_right">
           <h3>{{ item.goods_name }}</h3>
-          <!-- <van-rate
-            class="start"
-            v-model="values"
-            allow-half
-            void-icon="star"
-            void-color="#eee"
-          /> -->
+
           <p>￥{{ item.goods_price.toFixed(2) }}</p>
           <van-button type="danger">加入购物车</van-button>
         </div>
-      </div>
+      </div> -->
     </van-list>
     <router-view />
   </div>
 </template>
-
 
 <script>
 import { get } from "@/utils/request";
@@ -73,11 +98,29 @@ export default {
         name: "Search",
       });
     },
+    toCart(e) {
+      var evt = e || event;
+      // 阻止冒泡的兼容性写法
+      if (evt.stopPropagation) {
+        evt.stopPropagation();
+      } else {
+        evt.cancelBubble = true;
+      }
+      console.log("加入购物车成功！");
+    },
     returnRef() {
       history.back(-1);
     },
     onLoad() {
       this.loadData();
+    },
+    toDetail(item) {
+      this.$router.push({
+        name: "Detail",
+        query: {
+          id: item,
+        },
+      });
     },
     async loadData() {
       var params = {};
@@ -102,7 +145,6 @@ export default {
     //   location.href = "http://localhost:8080/#/Detail?" + item.goods_id;
     // },
   },
- 
 };
 </script>
 
@@ -170,5 +212,9 @@ p {
 .van-button--normal {
   padding: 0 10px;
   margin-left: 100px;
+}
+.van-button {
+  background: red;
+  color: white;
 }
 </style>

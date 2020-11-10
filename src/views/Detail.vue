@@ -100,7 +100,9 @@ import { get } from "@/utils/request.js";
 export default {
   data() {
     return {
-      goods: {},
+      goods: {
+        // goods_big_logo: "",
+      },
       // chosenCoupon: -1,
       // coupons: [coupon],
       // disabledCoupons: [coupon],
@@ -115,7 +117,7 @@ export default {
     );
     this.goods = res.data.message;
     console.log(this.goods);
-    console.log(this.goods.goods_id);
+    // console.log(this.goods.goods_id);
   },
   methods: {
     returnRef() {
