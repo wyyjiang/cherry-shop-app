@@ -1,125 +1,90 @@
 <template>
-  <div class="logo">
-    <div><img src="../assets/cherry-logo.png" alt="" /></div>
-    <div>
-      <el-form
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
-      >
-        <el-form-item label="用户名" prop="age">
-          <el-input v-model.number="ruleForm.age"></el-input>
-        </el-form-item>
-        <el-form-item label="输入密码" prop="pass">
-          <el-input
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="ruleForm.checkPass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >提交</el-button
-          >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-    <div class="root">
-      <router-link :to="{ name: 'Login' }">已有账号,请登录</router-link>
-    </div>
+  <!-- 注册 -->
+  <div class="reg">
+    <img
+      style="width:70%;"
+      src="../assets/cherry5.jpg"
+      alt=""
+    />
+    <van-form @submit="onSubmit">
+      <van-field
+        v-model="username"
+        name="userName"
+        label="用户名"
+        placeholder="用户名"
+        :rules="[{ required: true, message: '请填写用户名' }]"
+      />
+      <van-field
+        v-model="password"
+        type="password"
+        name="password"
+        label="密码"
+        placeholder="密码"
+        :rules="[{ required: true, message: '请填写密码' }]"
+      />
+      <van-field
+        v-model="repwd"
+        type="password"
+        name="repwd"
+        label="确认密码"
+        placeholder="请再一次密码"
+        :rules="[{ required: true, message: '请填写密码' }]"
+      />
+      <div style="margin: 16px;">
+        <van-button round block type="info" native-type="submit">
+          提交
+        </van-button>
+      </div>
+    </van-form>
+    <router-link :to="{ name: 'Login' }">已有账号,我要登录</router-link>
   </div>
 </template>
 
 <script>
+import { Notify } from "vant";
+import { regAPI } from "@/services/auth";
+import { setToken } from "@/utils/tools";
 export default {
   data() {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("用户名不能为空不能以0开头"));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("请输入数字值"));
-        } else {
-          if (value < 999) {
-            callback(new Error("用户名不小于4个长度"));
-          } else {
-            callback();
-          }
-        }
-      }, 1000);
-    };
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
-        }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
-    };
     return {
-      ruleForm: {
-        pass: "",
-        checkPass: "",
-        age: "",
-      },
-      rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        age: [{ validator: checkAge, trigger: "blur" }],
-      },
+      username: "",
+      repwd: "",
+      password: "",
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    async onSubmit(values) {
+      if (this.password != this.repwd) {
+        Notify({
+          type: "warning",
+          message: "两次输入的密码不一致",
+        });
+        return;
+      }
+      // console.log(values);
+      const u = await regAPI(values);
+      if (u.code === "success") {
+        setToken(u.data.data.id);
+        this.$router.push({
+          name: "User",
+        });
+      } else {
+        Notify({
+          type: "warning",
+          message: u.data.msg,
+        });
+      }
+      console.log(u);
     },
   },
 };
 </script>
 
 <style scoped>
-.logo > div {
+.reg {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-}
-.logo img {
-  width: 40%;
-}
-.root {
-  float: right;
 }
 </style>
