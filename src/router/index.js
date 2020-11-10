@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-// import { isLogined } from "../utils/tools";
-import { isLogined } from "@/utils/tools";
+import { isLogined } from "../utils/tools";
+// import { isLogined } from "@/utils/tools";
 import Home from "../views/Home.vue";
 // import { Toast } from "vant";
 
@@ -53,17 +53,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: () => import("../views/Login.vue"),
-    meta: {
-      needLogin: true,
-    },
   },
   {
     path: "/reg",
     name: "Reg",
     component: () => import("../views/Reg.vue"),
-    meta: {
-      needLogin: true,
-    },
   },
   {
     path: "/collect",
@@ -98,23 +92,14 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.needLogin) {
-    // if (isLogined()) {
-    //   next();
-    // }else{
-    //   next({
-    //     name:"Login"
-    //   })
-    // }
-    console.log(1);
-   if(isLogined()){
-     console.log(3);
-    next();
-   }
+    if (isLogined()) {
+      next();
+    } else {
+      next({ name: "Login" });
+    }
   } else {
     next();
-    console.log(2);
   }
 });
-
 
 export default router;
