@@ -8,8 +8,8 @@
     >
       <div class="header">
         <van-nav-bar
-          class="list_main"
-          title="商品列表"
+          class="detail_main"
+          title="商品详情"
           left-arrow
           @click-left="returnRef"
         ></van-nav-bar>
@@ -48,12 +48,10 @@
       >
         <template #footer>
           <van-button size="mini">加入购物车</van-button>
-          <van-button size="mini">按钮</van-button>
         </template>
       </van-card>
 
       <!-- <div class="dabox
-      
       " v-for="item in goods" :key="item.goods_id">
         <div class="box_left">
           <router-link
@@ -69,7 +67,6 @@
         </div>
         <div class="box_right">
           <h3>{{ item.goods_name }}</h3>
-
           <p>￥{{ item.goods_price.toFixed(2) }}</p>
           <van-button type="danger">加入购物车</van-button>
         </div>
@@ -78,7 +75,6 @@
     <router-view />
   </div>
 </template>
-
 <script>
 import { get } from "@/utils/request";
 
@@ -86,11 +82,11 @@ export default {
   data() {
     return {
       value: "",
-      values: 3.5,
+      // values: 3.5,
       goods: [],
       loading: false, //是否正在加载
       finished: false, //是否加载完成
-      // pagenum: 1, //页码
+      pagenum: 1, //页码
     };
   },
   methods: {
@@ -103,6 +99,7 @@ export default {
       history.back(-1);
     },
     onLoad() {
+      // console.log("开始加载");
       this.loadData();
     },
     toDetail(item) {
@@ -122,23 +119,21 @@ export default {
       }
       console.log(params);
       this.loading = true;
-      // this.$route.query.page = this.pagenum;
+      this.$route.query.page = this.pagenum;
       await get("/api/public/v1/goods/search", params).then((res) => {
-        this.goods = res.data.message.goods;
+        this.goods = [...this.goods, ...res.data.message.goods];
         // console.log(this.goods);
       });
-      // this.pagenum++;
+      this.pagenum++;
       this.loading = false;
     },
     // Detail(item) {
     //   console.log(item.goods_id);
-
     //   location.href = "http://localhost:8080/#/Detail?" + item.goods_id;
     // },
   },
 };
 </script>
-
 <style scoped>
 .list_main {
   background-color: #ffc7c7;
@@ -193,11 +188,18 @@ p {
   margin-top: 0.5rem;
   margin-left: 1rem;
 }
+.header {
+  /* position: relative; */
+}
 .van-button--normal {
   padding: 0 9px;
   margin-left: 100px;
 }
 .van-button {
   height: 33px;
+}
+.van-button {
+  background: red;
+  color: white;
 }
 </style>
