@@ -1,10 +1,18 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import Router from "vue-router";
+import { isLogined } from "../utils/tools";
 // import { isLogined } from "@/utils/tools";
 import Home from "../views/Home.vue";
 // import { Toast } from "vant";
 
-Vue.use(VueRouter);
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject)
+    return originalPush.call(this, location, onResolve, onReject);
+  return originalPush.call(this, location).catch((err) => err);
+};
+
+Vue.use(Router);
 
 const routes = [
   {
@@ -15,18 +23,23 @@ const routes = [
   {
     path: "/classify",
     name: "Classify",
-    component: () =>
-      import(/* webpackChunkName: "classify" */ "../views/Classify.vue"),
+    component: () => import("../views/Classify.vue"),
   },
   {
     path: "/cart",
     name: "Cart",
     component: () => import("../views/Cart.vue"),
+    meta: {
+      needLogin: true,
+    },
   },
   {
     path: "/user",
     name: "User",
     component: () => import("../views/User.vue"),
+    meta: {
+      needLogin: true,
+    },
   },
   {
     path: "/search",
@@ -80,24 +93,20 @@ const routes = [
   },
 ];
 
-const router = new VueRouter({
+const router = new Router({
   routes,
 });
 
-//判断是否要登录
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.needLogin) {
-//     if (isLogined()) {
-//       next();
-//     } else {
-//       next({
-//         name: "Login",
-//       });
-//     }
-//   } else {
-//     next();
-//   }
-// });
-
+router.beforeEach((to, from, next) => {
+  if (to.meta.needLogin) {
+    if (isLogined()) {
+      next();
+    } else {
+      next({ name: "Login" });
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

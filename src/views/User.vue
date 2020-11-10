@@ -7,7 +7,6 @@
       <div>
         <van-uploader :after-read="afterRead" />
         <div class="change_name">
-          <div>SHI</div>
           <div class="change_conter">
             <div><span>微信号:</span><span>三角形</span></div>
             <div>
@@ -46,25 +45,40 @@
         </router-link>
       </div>
 
-      <router-link :to="{ name: 'addressEdit' }">
-        <div class="conter">
-          <div><i class="el-icon-present"></i><span>退出登录</span></div>
-          <i class="el-icon-arrow-right"></i>
+      <div class="conter">
+        <div @click="onclick">
+          <i class="el-icon-present"></i><span>退出登录</span>
         </div>
-      </router-link>
+        <i class="el-icon-arrow-right"></i>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getToken, removeToken } from "@/utils/tools.js";
 export default {
   name: "user",
-
+  data() {
+    return {};
+  },
   methods: {
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       console.log(file);
+      console.log(2);
     },
+    onclick() {
+      removeToken();
+      this.$router.push({
+        name: "Login",
+      });
+    },
+  },
+  created() {
+    this.$eventBus.$on("username", () => {
+      this.names = getToken();
+    });
   },
 };
 </script>

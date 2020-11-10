@@ -3,17 +3,13 @@
     <div class="header">
       <van-nav-bar
         class="list_main"
-        title="商品列表"
+        title="商品详情"
         left-arrow
         @click-left="returnRef"
       ></van-nav-bar>
     </div>
     <div class="search" @click="toSearch">
-      <van-search
-        v-model="value"
-        placeholder="  搜索"
-        @click-left="returnRef"
-      />
+      <van-search v-model="value" placeholder="  搜索" />
     </div>
     <div class="list_content">
       <van-list
@@ -28,52 +24,42 @@
           :price="item.goods_price.toFixed(2)"
           :title="item.goods_name"
           :thumb="item.goods_big_logo | dalImg"
-          @click="toDetail(item.goods_id)"
+          @click-thumb="toDetail(item.goods_id)"
         >
           <template #footer>
-            <van-button size="mini" @click="toCart">加入购物车</van-button>
+            <van-button size="mini" @click="toCart(item.goods_id)"
+              >加入购物车</van-button
+            >
           </template>
         </van-card>
       </van-list>
     </div>
   </div>
 </template>
-
 <script>
 import { get } from "@/utils/request";
+import { getToken } from "@/utils/tools.js";
 
 export default {
   data() {
     return {
       value: "",
-      values: 3.5,
       goods: [],
       loading: false, //是否正在加载
       finished: false, //是否加载完成
-      // pagenum: 1, //页码
+      pagenum: 1, //页码
+      pagesize: 10, // 每页的数量
+      allnum: 0, // 商品的总数量
     };
   },
   methods: {
+    returnRef() {
+      history.back(-1);
+    },
     toSearch() {
       this.$router.push({
         name: "Search",
       });
-    },
-    toCart(e) {
-      var evt = e || event;
-      // 阻止冒泡的兼容性写法
-      if (evt.stopPropagation) {
-        evt.stopPropagation();
-      } else {
-        evt.cancelBubble = true;
-      }
-      console.log("加入购物车成功！");
-    },
-    returnRef() {
-      history.back(-1);
-    },
-    onLoad() {
-      this.loadData();
     },
     toDetail(item) {
       this.$router.push({
@@ -83,24 +69,47 @@ export default {
         },
       });
     },
+    toCart(id) {
+      console.log("加入购物车成功！");
+      console.log(id); // 商品id
+      let uid = getToken();
+      console.log(uid); // 用户uid
+    },
+    onLoad() {
+      // console.log("开始加载");
+      this.loadData();
+    },
+
     async loadData() {
       var params = {};
+      // 判断传入的是关键字还是cid
       if (this.$route.query.query) {
-        params = { query: this.$route.query.query };
+        params = {
+          query: this.$route.query.query,
+          pagenum: this.pagenum,
+          pagesize: this.pagesize,
+        };
       } else if (this.$route.query.cid) {
-        params = { cid: this.$route.query.cid };
+        params = {
+          cid: this.$route.query.cid,
+          pagenum: this.pagenum,
+          pagesize: this.pagesize,
+        };
       }
-      console.log(params);
       this.loading = true;
       await get("/api/public/v1/goods/search", params).then((res) => {
-        this.goods = res.data.message.goods;
+        this.goods = [...this.goods, ...res.data.message.goods];
+        this.allnum = res.data.message.total;
       });
+      this.pagenum++;
       this.loading = false;
+      if (this.goods.length >= this.allnum) {
+        this.finished = true;
+      }
     },
   },
 };
 </script>
-
 <style scoped>
 .list_main,
 .van-search {
@@ -121,9 +130,9 @@ export default {
   font-size: 15px;
   border-bottom: 2px solid #cecece;
 }
-.van-card__price {
-  color: red;
-  font-weight: 700;
+.van-button--normal {
+  padding: 0 9px;
+  margin-left: 100px;
 }
 .van-button {
   height: 33px;

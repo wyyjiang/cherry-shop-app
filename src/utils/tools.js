@@ -1,8 +1,9 @@
 export const serverUrl = "https://api-hmugo-web.itheima.net";
 
+
 //判断是否登录
 export function isLogined() {
-  if (localStorage.getItem("token")) {
+  if (localStorage.getItem("uid")) {
     return true;
   }
   return false;
@@ -10,15 +11,15 @@ export function isLogined() {
 
 // 设置token
 export function setToken(val) {
-  localStorage.setItem("token", val);
+ return localStorage.setItem("uid", val);
 }
 
 // 取token
 export function getToken() {
-  localStorage.getItem("token");
+  return localStorage.getItem("uid");
 }
 
 // 删除token
 export function removeToken() {
-  localStorage.removeItem("token");
+ return localStorage.removeItem("uid");
 }

@@ -12,9 +12,8 @@
     <div class="content">
       <img class="picture" :src="goods.goods_big_logo | dalImg" alt="" />
       <!-- <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="item in goods" :key="item.goods_id"
-          ><img @click="toDetail(item.goods_id)" :src="item.image_src" alt=""
-        /></van-swipe-item>
+        <van-swipe-item v-for="item in goods" :key="item.pics_id">
+        </van-swipe-item>
       </van-swipe> -->
 
       <div class="content_header">
@@ -22,8 +21,8 @@
           <h1>￥{{ goods.goods_price }}</h1>
         </div>
         <div class="content_right">
-          <div class="buy">明天00:00开抢</div>
-          <van-count-down :time="time">
+          <div class="buy">促销中</div>
+          <!-- <van-count-down :time="time">
             <template #default="timeData">
               <span class="block">{{ timeData.hours }}</span>
               <span class="colon">:</span>
@@ -31,7 +30,7 @@
               <span class="colon">:</span>
               <span class="block">{{ timeData.seconds }}</span>
             </template>
-          </van-count-down>
+          </van-count-down> -->
         </div>
       </div>
       <van-notice-bar
@@ -81,6 +80,12 @@
           <li class="prc">自提</li>
         </ul>
       </div>
+      <div class="info">
+        <div class="p_detail">图文详情</div>
+        <div class="p_introduce">
+          <div class="p_introduce_main"></div>
+        </div>
+      </div>
     </div>
     <div class="Gouwu">
       <van-goods-action :fixed="false">
@@ -93,21 +98,14 @@
     </div>
   </div>
 </template>
-
 <script>
 import { get } from "@/utils/request.js";
-
 export default {
   data() {
     return {
-      goods: {
-        // goods_big_logo: "",
-      },
-      // chosenCoupon: -1,
-      // coupons: [coupon],
-      // disabledCoupons: [coupon],
+      goods: {},
+      list: "",
       showList: "",
-      time: 20 * 60 * 60 * 1000,
     };
   },
   components: {},
@@ -116,9 +114,14 @@ export default {
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
     this.goods = res.data.message;
-    console.log(this.goods);
-    // console.log(this.goods.goods_id);
+    const res1 = await get(
+      "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
+    );
+    this.list = res1.data.message.goods_introduce;
+    var product_text = document.querySelector(".p_introduce_main");
+    product_text.innerHTML = this.list;
   },
+
   methods: {
     returnRef() {
       history.back(-1);
@@ -127,17 +130,22 @@ export default {
       this.showList = false;
       this.chosenCoupon = index;
     },
-    // onExchange(coupon) {
-    //   this.coupons.push(coupon);
-    // },
   },
 };
 </script>
-
 <style scoped>
 * {
   margin: 0;
   padding: 0;
+}
+.info {
+  background: #f4f4f2;
+  border-radius: 15px;
+}
+.p_detail {
+  font-size: 20px;
+  color: #e93b3d;
+  padding: 15px;
 }
 .detail {
   display: flex;
@@ -146,6 +154,7 @@ export default {
 .content {
   flex: 1;
   overflow-y: auto;
+  background: #fcf1f1;
 }
 .Gouwu .van-goods-action {
   position: static;
@@ -168,10 +177,10 @@ export default {
   margin: 0.5rem;
 }
 .content_header {
-  color: rgb(252, 250, 250);
-  height: 60px;
+  color: red;
+  height: 40px;
   font-size: 18px;
-  background: #26a96d;
+  /* background: #7cdb7a; */
   padding: 0.6rem;
   display: flex;
 }
@@ -208,19 +217,19 @@ span {
   color: #e93b3d;
 }
 .buy {
-  /* display: block; */
   font-size: 0.6rem;
-  color: red;
-  margin-left: 12rem;
+  color: #cecece;
+  line-height: 72px;
+  margin-left: 0.32rem;
+  margin-top: 20px;
   display: inline;
   margin-bottom: 15px;
-  /* margin-top: -13px; */
 }
 
 .van-count-down {
   display: inline;
   margin-top: 15px;
-  margin-left: 170px;
+  margin-left: 160px;
 }
 .colon {
   display: inline-block;
