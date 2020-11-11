@@ -32,8 +32,10 @@ export function regAPI(uid, password) {
   } else {
     user[uid] = {
       password: password,
-      collect: [],
-      cart: {},
+      collect: [], // 收藏
+      cart: {}, // 购物车
+      address: [], // 地址
+      order: [], // 订单信息
     };
     setUser(user);
     return { message: "注册成功！", code: 1 };
@@ -76,15 +78,15 @@ export function changePasswordAPI(uid, oldpassword, newpassword) {
 export function collectAPI(uid, pid) {
   let user = getUser();
   let collect = user[uid].collect;
-  if (collect.indexOf(pid)) {
+  if (collect.indexOf(pid) > -1) {
     var index = collect.indexOf(pid);
     user[uid].collect.splice(index, 1);
     setUser(user);
-    return { message: "删除收藏成功！" };
+    return { message: "删除收藏成功！", code: 0 };
   } else {
     user[uid].collect.push(pid);
     setUser(user);
-    return { message: "加入收藏成功！" };
+    return { message: "加入收藏成功！", code: 1 };
   }
 }
 
@@ -118,18 +120,53 @@ export function searchCartAPI(uid) {
   return user[uid].cart;
 }
 
-//管理货地址接口
-export function collectaddres(uid, pid) {
+// 添加地址接口
+export function addAddressAPI(uid, username, country, address, telphone) {
   let user = getUser();
-  let collect = user[uid].collect;
-  if (collect.indexOf(pid)) {
-    var index = collect.indexOf(pid);
-    user[uid].collect.splice(index, 1);
-    setUser(user);
-    return { message: "删除收藏成功！" };
-  } else {
-    user[uid].collect.push(pid);
-    setUser(user);
-    return { message: "加入收藏成功！" };
-  }
+  const index = user[uid].address.length; // 新添加的地址在地址列表中的索引位
+  user[uid].address.push({
+    username: username,
+    country: country,
+    address: address,
+    telphone: telphone,
+  });
+  setUser(user);
+  return { message: "添加地址成功！", code: 1, index: index };
 }
+// 删除地址接口
+export function delAddressAPI(uid, index) {
+  let user = getUser();
+  user[uid].address.splice(index, 1);
+  setUser(user);
+  return { message: "删除地址成功！", code: 1 };
+}
+
+// 查询地址接口
+export function searchAddressAPI(uid) {
+  let user = getUser();
+  return user[uid].address;
+}
+
+// 修改地址接口
+export function editAddressAPI(
+  uid,
+  index,
+  username,
+  country,
+  address,
+  telphone
+) {
+  let user = getUser();
+  user[uid].address[index] = {
+    username: username,
+    country: country,
+    address: address,
+    telphone: telphone,
+  };
+  setUser(user);
+  return { message: "修改成功！", code: 1 };
+}
+
+// 新增订单接口
+
+// 查询订单接口
