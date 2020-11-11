@@ -3,16 +3,25 @@
   password:密码
   pid:商品id
   pnum:商品数量
+  addres:收货地址
 */
 
 // 取user
-function getUser() {
+export function getUser() {
   return JSON.parse(localStorage.getItem("user"));
+}
+//取地址
+export function getAddres(){
+  return JSON.parse(localStorage.getItem("addres"));
 }
 
 // 存储user
-function setUser(user) {
+export function setUser(user) {
   localStorage.setItem("user", JSON.stringify(user));
+}
+//存储addres
+export function setAddres(addres){
+   localStorage.setItem("addres",JSON.stringify(addres));
 }
 
 // 注册接口
@@ -107,4 +116,20 @@ export function deleteCartAPI(uid, pid) {
 export function searchCartAPI(uid) {
   let user = getUser();
   return user[uid].cart;
+}
+
+//管理货地址接口
+export function collectaddres(uid, pid) {
+  let user = getUser();
+  let collect = user[uid].collect;
+  if (collect.indexOf(pid)) {
+    var index = collect.indexOf(pid);
+    user[uid].collect.splice(index, 1);
+    setUser(user);
+    return { message: "删除收藏成功！" };
+  } else {
+    user[uid].collect.push(pid);
+    setUser(user);
+    return { message: "加入收藏成功！" };
+  }
 }

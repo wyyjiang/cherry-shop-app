@@ -7,7 +7,6 @@
       <div>
         <van-uploader :after-read="afterRead" />
         <div class="change_name">
-          
           <div class="change_conter">
             <div>账号：{{ names }}</div>
             <div>
@@ -28,6 +27,14 @@
         <router-link :to="{ name: 'Service' }">
           <div class="conter">
             <div><i class="el-icon-present"></i><span>收藏商品</span></div>
+            <i class="el-icon-arrow-right"></i>
+          </div>
+        </router-link>
+        <router-link :to="{ name: 'AddressList' }">
+          <div class="conter" @click="onclick1">
+            <div >
+              <i class="el-icon-present"></i><span>收货地址管理</span>
+            </div>
             <i class="el-icon-arrow-right"></i>
           </div>
         </router-link>
@@ -57,14 +64,14 @@
 </template>
 
 <script>
-import {  removeToken } from "@/utils/tools.js";
+import { removeToken } from "@/utils/tools.js";
 import { getToken } from "@/utils/tools.js";
 export default {
   name: "user",
   data() {
     return {
       names: "",
-      indexa:[]
+      list:[]
     };
   },
   methods: {
@@ -79,13 +86,33 @@ export default {
         name: "Login",
       });
     },
+    onclick1() {
+      this.$eventBus1.$emit("address",this.list);
+    },
+    
   },
   created() {
-    this.names = getToken();
-    this.indexa.push()
-    // this.$eventBus.$on("usernames", (e) => {
-    //   this.names=e+"w"
-    // });
+    this.names = getToken()
+    if (!localStorage.getItem("addres")) {
+     
+      var addres = [
+        {
+        
+          name: "张三",
+          tel: "13000000000",
+          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
+          isDefault: true,
+        },
+        {
+        
+          name: "李四",
+          tel: "1310000000",
+          address: "浙江省杭州市拱墅区莫干山路 50 号",
+        },
+      ];
+      localStorage.setItem("adders", JSON.stringify(addres));
+      this.list = addres
+    }
   },
 };
 </script>

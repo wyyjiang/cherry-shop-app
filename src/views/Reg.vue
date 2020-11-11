@@ -59,7 +59,6 @@ export default {
         });
         return;
       } else {
-        regAPI(this.username, this.password);
         if (regAPI(this.username, this.password).code == 0) {
           Notify({
             type: "warning",
