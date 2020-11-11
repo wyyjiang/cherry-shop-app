@@ -30,8 +30,7 @@
 
 <script>
 import { Notify } from "vant";
-// import { loginAPI } from "@/services/auth";
-import { setToken} from "@/utils/tools";
+import { setToken } from "@/utils/tools";
 import { loginAPI } from "@/services/user";
 export default {
   data() {
@@ -41,8 +40,8 @@ export default {
     };
   },
   methods: {
-     onSubmit() {
-     const u =  loginAPI(this.username,this.password);
+    onSubmit() {
+      const u = loginAPI(this.username, this.password);
       if (u.code == 1) {
         setToken(this.username);
         this.$router.push({

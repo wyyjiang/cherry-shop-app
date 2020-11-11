@@ -39,6 +39,8 @@
 <script>
 import { get } from "@/utils/request";
 import { getToken } from "@/utils/tools.js";
+import { addCartAPI } from "@/services/user.js";
+import { Toast } from "vant";
 
 export default {
   data() {
@@ -70,13 +72,11 @@ export default {
       });
     },
     toCart(id) {
-      console.log("加入购物车成功！");
-      console.log(id); // 商品id
       let uid = getToken();
-      console.log(uid); // 用户uid
+      addCartAPI(uid, id, 1);
+      Toast.success("加入购物车成功！");
     },
     onLoad() {
-      // console.log("开始加载");
       this.loadData();
     },
 

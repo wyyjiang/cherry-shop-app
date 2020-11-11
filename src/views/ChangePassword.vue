@@ -45,14 +45,12 @@
 
 <script>
 import { Notify } from "vant";
-import { regAPI } from "@/services/auth";
-import { setToken } from "@/utils/tools";
 export default {
   data() {
     return {
       username: "",
       repwd: "",
-      repwds:"",
+      repwds: "",
       password: "",
     };
   },
@@ -66,19 +64,6 @@ export default {
         return;
       }
       console.log(values);
-      const u = regAPI(values);
-      if (u.message === "success") {
-        setToken(u.data.data.id);
-        this.$router.push({
-          name: "User",
-        });
-      } else {
-        Notify({
-          type: "warning",
-          message: u.data.msg,
-        });
-      }
-      console.log(u);
     },
   },
 };
