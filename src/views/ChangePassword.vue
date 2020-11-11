@@ -22,7 +22,15 @@
         v-model="repwd"
         type="password"
         name="repwd"
-        label="确认密码"
+        label="新密码"
+        placeholder="密码"
+        :rules="[{ required: true, message: '请填写密码' }]"
+      />
+      <van-field
+        v-model="repwds"
+        type="password"
+        name="repwds"
+        label="确认新密码"
         placeholder="请再一次密码"
         :rules="[{ required: true, message: '请填写密码' }]"
       />
@@ -32,46 +40,45 @@
         </van-button>
       </div>
     </van-form>
-    <router-link :to="{ name: 'Login' }">已有账号,我要登录</router-link>
   </div>
 </template>
 
 <script>
 import { Notify } from "vant";
-// import { regAPI } from "@/services/auth";
-import { regAPI } from "@/services/user";
+import { regAPI } from "@/services/auth";
 import { setToken } from "@/utils/tools";
-// import { setUser } from "@/utils/user";
 export default {
   data() {
     return {
       username: "",
       repwd: "",
+      repwds:"",
       password: "",
     };
   },
   methods: {
-    onSubmit() {
+    onSubmit(values) {
       if (this.password != this.repwd) {
         Notify({
           type: "warning",
           message: "两次输入的密码不一致",
         });
         return;
-      } else {
-        regAPI(this.username, this.password);
-        if (regAPI(this.username, this.password).code == 0) {
-          Notify({
-            type: "warning",
-            message: regAPI(this.username, this.password).message,
-          });
-        } else {
-          this.$router.push({
-            name: "Home",
-          });
-          setToken(this.username)
-        }
       }
+      console.log(values);
+      const u = regAPI(values);
+      if (u.message === "success") {
+        setToken(u.data.data.id);
+        this.$router.push({
+          name: "User",
+        });
+      } else {
+        Notify({
+          type: "warning",
+          message: u.data.msg,
+        });
+      }
+      console.log(u);
     },
   },
 };

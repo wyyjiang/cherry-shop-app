@@ -76,9 +76,14 @@
     </div>
     <div class="Gouwu">
       <van-goods-action :fixed="false">
-        <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" />
+        <van-goods-action-icon
+          icon="chat-o"
+          text="客服"
+          color="#07c160"
+          :to="{ name: 'Chat' }"
+        />
         <van-goods-action-icon icon="cart-o" text="购物车" />
-        <van-goods-action-icon class="el-icon-star-off" text="已收藏" />
+        <van-goods-action-icon icon="star" text="收藏" />
         <van-goods-action-button type="warning" text="加入购物车" />
         <van-goods-action-button type="danger" text="立即购买" />
       </van-goods-action>
@@ -92,11 +97,7 @@ export default {
     return {
       goods: {},
       list: "",
-      // chosenCoupon: -1,
-      // coupons: [coupon],
-      // disabledCoupons: [coupon],
       showList: "",
-      // time: 20 * 60 * 60 * 1000,
     };
   },
   components: {},
@@ -105,12 +106,10 @@ export default {
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
     this.goods = res.data.message;
-    // console.log(this.goods);
     const res1 = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
     this.list = res1.data.message.goods_introduce;
-    // console.log(this.list);
     var product_text = document.querySelector(".p_introduce_main");
     product_text.innerHTML = this.list;
   },
@@ -123,9 +122,6 @@ export default {
       this.showList = false;
       this.chosenCoupon = index;
     },
-    // onExchange(coupon) {
-    //   this.coupons.push(coupon);
-    // },
   },
 };
 </script>
@@ -135,7 +131,7 @@ export default {
   padding: 0;
 }
 .info {
-  background: #f7ecec;
+  background: #f4f4f2;
   border-radius: 15px;
 }
 .p_detail {
@@ -150,7 +146,7 @@ export default {
 .content {
   flex: 1;
   overflow-y: auto;
-  background: #fcf8f8;
+  background: #fcf1f1;
 }
 .Gouwu .van-goods-action {
   position: static;
@@ -251,7 +247,4 @@ ul li {
   color: #8c8c8c;
   font-size: 0.8rem;
 }
-.el-icon-star-off {
-  font-size: 14px;
-}
-</style>  
+</style>

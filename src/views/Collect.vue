@@ -51,5 +51,4 @@ export default {
   background-color: #ffffff;
   border-bottom: solid 1px #aaaaaa;
 }
-
 </style>

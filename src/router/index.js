@@ -5,6 +5,13 @@ import { isLogined } from "../utils/tools";
 import Home from "../views/Home.vue";
 // import { Toast } from "vant";
 
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject)
+    return originalPush.call(this, location, onResolve, onReject);
+  return originalPush.call(this, location).catch((err) => err);
+};
+
 Vue.use(Router);
 
 const routes = [
@@ -65,19 +72,19 @@ const routes = [
     component: () => import("../views/Collect.vue"),
   },
   {
-    path: "/addresslist",
-    name: "addressList",
-    component: () => import("../views/addressList.vue"),
+    path: "/aboutUs",
+    name: "AboutUs",
+    component: () => import("../views/AboutUs.vue"),
   },
   {
-    path: "/addressedit",
-    name: "addressEdit",
-    component: () => import("../views/addressEdit.vue"),
+    path: "/service",
+    name: "Service",
+    component: () => import("../views/Service.vue"),
   },
   {
-    path: "/amend",
-    name: "amend",
-    component: () => import("../views/amend.vue"),
+    path: "/change",
+    name: "Change",
+    component: () => import("../views/ChangePassword.vue"),
   },
   {
     path: "/chat",
@@ -88,6 +95,11 @@ const routes = [
     path: "/about",
     name: "About",
     component: () => import("../views/About.vue"),
+  },
+  {
+    path: "/query",
+    name: "Query",
+    component: () => import("../views/Query.vue"),
   },
   {
     path: "*",

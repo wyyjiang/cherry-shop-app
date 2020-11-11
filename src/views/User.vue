@@ -7,9 +7,8 @@
       <div>
         <van-uploader :after-read="afterRead" />
         <div class="change_name">
-          <div>{{ names }}</div>
           <div class="change_conter">
-            <div><span>微信号:</span><span>三角形</span></div>
+            <div>账号：{{ names }}</div>
             <div>
               <i class="el-icon-arrow-right"></i>
             </div>
@@ -18,27 +17,27 @@
       </div>
     </div>
     <div class="big_conter">
-      <router-link :to="{ name: 'addressEdit' }">
+      <router-link :to="{ name: 'Change' }">
         <div class="conter">
           <div><i class="el-icon-present"></i><span>修改信息</span></div>
           <i class="el-icon-arrow-right"></i>
         </div>
       </router-link>
       <div class="conter_childer">
-        <router-link :to="{ name: 'addressEdit' }">
+        <router-link :to="{ name: 'Service' }">
           <div class="conter">
             <div><i class="el-icon-present"></i><span>收藏商品</span></div>
             <i class="el-icon-arrow-right"></i>
           </div>
         </router-link>
-        <router-link :to="{ name: 'addressList' }">
+        <router-link :to="{ name: 'Service' }">
           <div class="conter">
-            <div><i class="el-icon-present"></i><span>收获地址管理</span></div>
+            <div><i class="el-icon-present"></i><span>客服</span></div>
             <i class="el-icon-arrow-right"></i>
           </div>
         </router-link>
 
-        <router-link :to="{ name: 'addressEdit' }">
+        <router-link :to="{ name: 'AboutUs' }">
           <div class="conter">
             <div><i class="el-icon-present"></i><span>关于我们</span></div>
             <i class="el-icon-arrow-right"></i>
@@ -57,11 +56,15 @@
 </template>
 
 <script>
-import { getToken, removeToken } from "@/utils/tools.js";
+import { removeToken } from "@/utils/tools.js";
+import { getToken } from "@/utils/tools.js";
 export default {
   name: "user",
   data() {
-    return {};
+    return {
+      names: "",
+      indexa: [],
+    };
   },
   methods: {
     afterRead(file) {
@@ -77,9 +80,11 @@ export default {
     },
   },
   created() {
-    this.$eventBus.$on("username", () => {
-      this.names = getToken();
-    });
+    this.names = getToken();
+    this.indexa.push();
+    // this.$eventBus.$on("usernames", (e) => {
+    //   this.names=e+"w"
+    // });
   },
 };
 </script>
