@@ -7,7 +7,6 @@
       <div>
         <van-uploader :after-read="afterRead" />
         <div class="change_name">
-          
           <div class="change_conter">
             <div>账号：{{ names }}</div>
             <div>
@@ -25,7 +24,7 @@
         </div>
       </router-link>
       <div class="conter_childer">
-        <router-link :to="{ name: 'Service' }">
+        <router-link :to="{ name: 'Collect' }">
           <div class="conter">
             <div><i class="el-icon-present"></i><span>收藏商品</span></div>
             <i class="el-icon-arrow-right"></i>
@@ -57,14 +56,14 @@
 </template>
 
 <script>
-import {  removeToken } from "@/utils/tools.js";
+import { removeToken } from "@/utils/tools.js";
 import { getToken } from "@/utils/tools.js";
 export default {
   name: "user",
   data() {
     return {
       names: "",
-      indexa:[]
+      indexa: [],
     };
   },
   methods: {
@@ -82,7 +81,7 @@ export default {
   },
   created() {
     this.names = getToken();
-    this.indexa.push()
+    this.indexa.push();
     // this.$eventBus.$on("usernames", (e) => {
     //   this.names=e+"w"
     // });
