@@ -14,7 +14,6 @@
 <script>
 import { Toast } from "vant";
 import { list } from "../utils/list";
-// import { getAddres } from "../services/user";
 export default {
   data() {
     return {

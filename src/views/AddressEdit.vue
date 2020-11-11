@@ -1,43 +1,43 @@
 <template>
-  <div class="address">
-    <van-nav-bar  left-arrow @click-left="onClickLeft" />
-    <van-address-edit
-      :area-list="areaList"
-      show-delete
-      show-set-default
-      show-search-result
-      :search-result="searchResult"
-      :area-columns-placeholder="['请选择', '请选择', '请选择']"
-      @save="onSave"
-      @delete="onDelete"
-      @change-detail="onChangeDetail"
-    />
-  </div>
+  <van-address-edit
+    :area-list="areaList"
+    show-delete
+    show-search-result
+    :search-result="searchResult"
+    :area-columns-placeholder="['请选择', '请选择', '请选择']"
+    @save="onSave"
+    @delete="onDelete"
+    @change-detail="onChangeDetail"
+  />
 </template>
 
 <script>
 import { Toast } from "vant";
 import { areaList } from "../utils/areaList";
-import {list} from "../utils/list"
+import { getUser } from "../services/user";
 export default {
   data() {
     return {
       areaList,
       searchResult: [],
-      list,
     };
   },
   methods: {
-    onSave(e) {
-      Toast("save");
-      console.log(e);
-      
+    onSave() {
+      Toast("保存成功");
+      console.log( getUser());
+      // addAddressAPI(
+      //   uid,
+      //   save.name,
+      //   save.postalCode,
+      //   save.city,
+      //   save.county,
+      //   save.addressDetail,
+      //   save.tel
+      // );
     },
     onDelete() {
       Toast("delete");
-    },
-    onClickLeft() {
-      history.back(-1);
     },
     onChangeDetail(val) {
       if (val) {

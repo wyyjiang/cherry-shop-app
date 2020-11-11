@@ -10,18 +10,10 @@
 export function getUser() {
   return JSON.parse(localStorage.getItem("user"));
 }
-//取地址
-export function getAddres(){
-  return JSON.parse(localStorage.getItem("addres"));
-}
 
 // 存储user
 export function setUser(user) {
   localStorage.setItem("user", JSON.stringify(user));
-}
-//存储addres
-export function setAddres(addres){
-   localStorage.setItem("addres",JSON.stringify(addres));
 }
 
 // 注册接口
@@ -121,13 +113,20 @@ export function searchCartAPI(uid) {
 }
 
 // 添加地址接口
-export function addAddressAPI(uid, username, country, address, telphone) {
+export function addAddressAPI(
+  uid,
+  username,
+  province,
+  country,
+  city,
+  address,
+  telphone
+) {
   let user = getUser();
   const index = user[uid].address.length; // 新添加的地址在地址列表中的索引位
   user[uid].address.push({
     username: username,
-    country: country,
-    address: address,
+    address: province + country + city + address,
     telphone: telphone,
   });
   setUser(user);

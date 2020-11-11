@@ -31,10 +31,8 @@
           </div>
         </router-link>
         <router-link :to="{ name: 'AddressList' }">
-          <div class="conter" @click="onclick1">
-            <div >
-              <i class="el-icon-present"></i><span>收货地址管理</span>
-            </div>
+          <div class="conter">
+            <div><i class="el-icon-present"></i><span>收货地址管理</span></div>
             <i class="el-icon-arrow-right"></i>
           </div>
         </router-link>
@@ -71,7 +69,7 @@ export default {
   data() {
     return {
       names: "",
-      list:[]
+      list: [],
     };
   },
   methods: {
@@ -86,33 +84,9 @@ export default {
         name: "Login",
       });
     },
-    onclick1() {
-      this.$eventBus1.$emit("address",this.list);
-    },
-    
   },
   created() {
-    this.names = getToken()
-    if (!localStorage.getItem("addres")) {
-     
-      var addres = [
-        {
-        
-          name: "张三",
-          tel: "13000000000",
-          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
-          isDefault: true,
-        },
-        {
-        
-          name: "李四",
-          tel: "1310000000",
-          address: "浙江省杭州市拱墅区莫干山路 50 号",
-        },
-      ];
-      localStorage.setItem("adders", JSON.stringify(addres));
-      this.list = addres
-    }
+    this.names = getToken();
   },
 };
 </script>
