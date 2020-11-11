@@ -102,6 +102,16 @@ const routes = [
     component: () => import("../views/Query.vue"),
   },
   {
+    path: "/addressedit",
+    name: "AddressEdit",
+    component: () => import("../views/AddressEdit.vue"),
+  },
+  {
+    path: "/addresslist",
+    name: "AddressList",
+    component: () => import("../views/AddressList.vue"),
+  },
+  {
     path: "*",
     name: "404",
     component: () => import("../views/404"),

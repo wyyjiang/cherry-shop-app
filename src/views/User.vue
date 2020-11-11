@@ -30,6 +30,12 @@
             <i class="el-icon-arrow-right"></i>
           </div>
         </router-link>
+        <router-link :to="{ name: 'AddressList' }">
+          <div class="conter">
+            <div><i class="el-icon-present"></i><span>收货地址管理</span></div>
+            <i class="el-icon-arrow-right"></i>
+          </div>
+        </router-link>
         <router-link :to="{ name: 'Service' }">
           <div class="conter">
             <div><i class="el-icon-present"></i><span>客服</span></div>
@@ -63,7 +69,7 @@ export default {
   data() {
     return {
       names: "",
-      indexa: [],
+      list: [],
     };
   },
   methods: {
@@ -81,10 +87,6 @@ export default {
   },
   created() {
     this.names = getToken();
-    this.indexa.push();
-    // this.$eventBus.$on("usernames", (e) => {
-    //   this.names=e+"w"
-    // });
   },
 };
 </script>

@@ -38,10 +38,8 @@
 
 <script>
 import { Notify } from "vant";
-// import { regAPI } from "@/services/auth";
 import { regAPI } from "@/services/user";
 import { setToken } from "@/utils/tools";
-// import { setUser } from "@/utils/user";
 export default {
   data() {
     return {
@@ -59,7 +57,6 @@ export default {
         });
         return;
       } else {
-        regAPI(this.username, this.password);
         if (regAPI(this.username, this.password).code == 0) {
           Notify({
             type: "warning",
@@ -69,7 +66,7 @@ export default {
           this.$router.push({
             name: "Home",
           });
-          setToken(this.username)
+          setToken(this.username);
         }
       }
     },

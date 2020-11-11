@@ -8,48 +8,21 @@
         @click-left="returnRef"
       ></van-nav-bar>
     </div>
-
     <div class="content">
       <img class="picture" :src="goods.goods_big_logo | dalImg" alt="" />
-
       <div class="content_header">
-        <div class="content_left">
-          <h1>￥{{ goods.goods_price }}</h1>
-        </div>
-        <div class="content_right">
-          <div class="buy">促销中</div>
-        </div>
+        <div class="content_left">￥{{ goods.goods_price }}</div>
+        <div class="content_right">促销中</div>
       </div>
       <van-notice-bar
         left-icon="volume-o"
-        text="双11特卖，大牌来袭，买400减40，蓄力待发,双十一我们来了! 一年如一日,勇攀销量顶峰。 备战六个月,只为双十一。 今天很残酷,明天更残酷,但双十一很美好。"
+        text="双11特卖，大牌来袭，买400减40，蓄力待发，双十一我们来了！ 一年如一日，勇攀销量顶峰。 备战六个月，只为双十一。 今天很残酷，明天更残酷，但双十一很美好。"
       />
       <h2>{{ goods.goods_name }}</h2>
       <p>
         【11.11抢先购】大牌来袭，部分商品满400减40！
         领优惠券下单更优惠,快来加购吧！！
       </p>
-      <!-- <van-coupon-cell
-        :coupons="coupons"
-        :chosen-coupon="chosenCoupon"
-        @click="showList = true"
-      /> -->
-      <!-- 优惠券列表 -->
-      <!-- <van-popup
-        v-model="showList"
-        round
-        v-show="showList"
-        position="bottom"
-        style="height: 90%; padding-top: 4px"
-      >
-        <van-coupon-list
-          :coupons="coupons"
-          :chosen-coupon="chosenCoupon"
-          :disabled-coupons="disabledCoupons"
-          @change="onChange"
-          @exchange="onExchange"
-        />
-      </van-popup> -->
       <div class="txt">
         <i class="icon_buy"> <img src="../assets/buy.png" alt="" /></i>
         <span>极速审核</span>
@@ -57,7 +30,7 @@
         <span>免费上门取退</span>
       </div>
       <div class="serve">
-        <p>运费 免运费</p>
+        <div>运费： 免运费</div>
         <ul>
           <li class="prc">发货&商家售后</li>
           <li class="prc">7天无理由退货</li>
@@ -76,36 +49,60 @@
     </div>
     <div class="Gouwu">
       <van-goods-action :fixed="false">
+        <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" />
+        <van-goods-action-icon icon="cart-o" text="购物车" @click="toCart" />
         <van-goods-action-icon
-          icon="chat-o"
-          text="客服"
-          color="#07c160"
-          :to="{ name: 'Chat' }"
+          @click="toCollect"
+          icon="star"
+          :text="isCollected ? '已收藏' : '收藏'"
+          :color="isCollected ? '#ff5000' : '#323233'"
         />
-        <van-goods-action-icon icon="cart-o" text="购物车" />
-        <van-goods-action-icon icon="star" text="收藏" />
-        <van-goods-action-button type="warning" text="加入购物车" />
-        <van-goods-action-button type="danger" text="立即购买" />
+        <van-goods-action-button
+          @click="addProduct"
+          type="warning"
+          text="加入购物车"
+        />
+        <van-goods-action-button
+          @click="buyProduct"
+          type="danger"
+          text="立即购买"
+        />
       </van-goods-action>
     </div>
   </div>
 </template>
 <script>
 import { get } from "@/utils/request.js";
+import { addCartAPI, getCollectAPI, collectAPI } from "@/services/user.js";
+import { getToken } from "@/utils/tools.js";
+import { Toast } from "vant";
+
 export default {
   data() {
     return {
       goods: {},
       list: "",
       showList: "",
+      isCollected: true,
     };
   },
   components: {},
   async created() {
+    // 判断此商品是否收藏
+    let like = getCollectAPI(getToken());
+    console.log(like);
+    if (like.indexOf(this.$route.query.id) > -1) {
+      this.isCollected = true;
+    } else {
+      this.isCollected = false;
+    }
+
     const res = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
+    console.log(res);
     this.goods = res.data.message;
+    console.log(this.goods);
     const res1 = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
@@ -118,26 +115,46 @@ export default {
     returnRef() {
       history.back(-1);
     },
-    onChange(index) {
-      this.showList = false;
-      this.chosenCoupon = index;
+    toCart() {
+      this.$router.push({
+        name: "Cart",
+      });
+    },
+    addProduct() {
+      Toast.success("加入购物车成功！");
+      addCartAPI(getToken(), this.$route.query.id, 1);
+    },
+    buyProduct() {
+      Toast.success("购买成功！");
+    },
+    toCollect() {
+      const c = collectAPI(getToken(), this.$route.query.id);
+      console.log(c);
+      if (c.code == 1) {
+        Toast.success(c.message);
+        this.isCollected = true;
+      } else {
+        Toast({
+          icon: "cross",
+          message: c.message,
+        });
+        this.isCollected = false;
+      }
     },
   },
 };
 </script>
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-}
 .info {
-  background: #f4f4f2;
+  background: #fbe6d4;
   border-radius: 15px;
+  margin-top: 0.5rem;
 }
 .p_detail {
-  font-size: 20px;
+  font-size: 1.5rem;
   color: #e93b3d;
-  padding: 15px;
+  padding-left: 1rem;
+  padding-top: 1rem;
 }
 .detail {
   display: flex;
@@ -169,17 +186,18 @@ export default {
   margin: 0.5rem;
 }
 .content_header {
-  color: red;
   height: 40px;
   font-size: 18px;
-  /* background: #7cdb7a; */
   padding: 0.6rem;
   display: flex;
+  margin: 0.2rem 0;
+  display: flex;
 }
-h1 {
-  font-size: 20px;
+.content_left {
+  color: red;
+  font-size: 1.7rem;
   display: inline-block;
-  line-height: 60px;
+  /* line-height: 60px; */
 }
 .picture1 {
   width: 100%;
@@ -200,6 +218,7 @@ p {
   width: 70px;
   height: 13px;
   line-height: 13px;
+  margin-right: 1rem;
 }
 span {
   flex: 1;
@@ -208,12 +227,12 @@ span {
   font-size: 0.9rem;
   color: #e93b3d;
 }
-.buy {
+.content_right {
   font-size: 0.6rem;
   color: #cecece;
-  line-height: 72px;
-  margin-left: 0.32rem;
-  margin-top: 20px;
+  /* line-height: 72px; */
+  margin-left: 0.6rem;
+  margin-top: 0.8rem;
   display: inline;
   margin-bottom: 15px;
 }
@@ -239,12 +258,24 @@ span {
 .serve {
   background-color: rgb(255, 249, 236);
   border-radius: 13px;
+  margin-top: 0.5rem;
 }
-ul li {
-  padding: 2px 10px 5px 10px;
+.serve div {
+  margin-left: 1rem;
+  font-size: 0.8rem;
+  padding: 0.5rem 0;
+  color: #aaa;
+}
+.serve ul {
+  margin-left: 1rem;
+}
+.serve ul li {
+  margin-right: 1rem;
+  padding: 0.4rem 0;
   display: inline-block;
   line-height: 1;
-  color: #8c8c8c;
-  font-size: 0.8rem;
+  color: #aaaaaa;
+  font-weight: bold;
+  font-size: 0.7rem;
 }
 </style>
