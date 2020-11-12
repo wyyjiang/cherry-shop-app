@@ -38,7 +38,7 @@
           <div><i class="el-icon-collection"></i><span>我的收藏</span></div>
           <i class="el-icon-arrow-right"></i>
         </div>
-        <div class="conter" @click="toCollect">
+        <div class="conter" @click="toOrder">
           <div>
             <i class="el-icon-shopping-cart-full"></i><span>我的订单</span>
           </div>
@@ -79,7 +79,10 @@ export default {
       this.$router.push({ name: "ChangePassword" });
     },
     toCollect() {
-      this.$router.push({ name: "Query" });
+      this.$router.push({ name: "Collect" });
+    },
+    toOrder() {
+      this.$router.push({ name: "OrderSearch" });
     },
     toAddress() {
       this.$router.push({ name: "AddressList" });
@@ -98,7 +101,7 @@ export default {
     onclick() {
       removeToken();
       this.$router.push({
-        name: "Login",
+        name: "Home",
       });
     },
   },

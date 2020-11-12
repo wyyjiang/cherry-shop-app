@@ -156,26 +156,6 @@ export function searchAddressAPI(uid) {
   return user[uid].address;
 }
 
-// 修改地址接口
-// export function editAddressAPI(
-//   uid,
-//   index,
-//   username,
-//   country,
-//   address,
-//   telphone
-// ) {
-//   let user = getUser();
-//   user[uid].address[index] = {
-//     username: username,
-//     country: country,
-//     address: address,
-//     telphone: telphone,
-//   };
-//   setUser(user);
-//   return { message: "修改成功！", code: 1 };
-// }
-
 // 新增订单接口
 export function addOrderAPI(uid, site, product, price) {
   let user = getUser();
@@ -188,8 +168,6 @@ export function addOrderAPI(uid, site, product, price) {
     date.getHours() +
     date.getMinutes() +
     date.getSeconds();
-  // site:{username:xxx,telphone:xxx,address:xxx}
-  // product:{name:xxx,num:xxx,price:xxx,img:xxx}
   user[uid].order[orderID] = {
     orderID: orderID,
     time: date,

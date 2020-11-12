@@ -8,6 +8,13 @@
         @click-left="returnRef"
       ></van-nav-bar>
     </div>
+    <div class="empty" v-if="isEmpty">
+      <van-empty
+        class="custom-image"
+        image="https://img.yzcdn.cn/vant/custom-empty-image.png"
+        description="还没有地址哦~快去添加一个地址吧！"
+      />
+    </div>
     <div class="addressList">
       <van-address-list
         v-model="chosenAddressId"
@@ -23,12 +30,7 @@
 
 <script>
 import { Toast } from "vant";
-import {
-  searchAddressAPI,
-  delAddressAPI,
-  getUser,
-  // setUser,
-} from "../services/user";
+import { searchAddressAPI, delAddressAPI, getUser } from "../services/user";
 import { getToken } from "../utils/tools";
 
 export default {
@@ -37,6 +39,7 @@ export default {
       chosenAddressId: "1",
       list: [],
       isSelect: false,
+      isEmpty: true,
     };
   },
   methods: {
@@ -83,6 +86,11 @@ export default {
   created() {
     const uid = getToken();
     this.list = searchAddressAPI(uid);
+    if (this.list.length > 0) {
+      this.isEmpty = false;
+    } else {
+      this.isEmpty = true;
+    }
   },
 };
 </script>
@@ -90,5 +98,8 @@ export default {
 <style scoped>
 .addresslist_main {
   background-color: #ffc7c7;
+}
+.empty {
+  margin-top: 100px;
 }
 </style>
