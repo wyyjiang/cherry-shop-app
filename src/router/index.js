@@ -70,6 +70,9 @@ const routes = [
     path: "/collect",
     name: "Collect",
     component: () => import("../views/Collect.vue"),
+    meta: {
+      needLogin: true,
+    },
   },
   {
     path: "/aboutUs",
@@ -85,26 +88,41 @@ const routes = [
     path: "/changepassword",
     name: "ChangePassword",
     component: () => import("../views/ChangePassword.vue"),
+    meta: {
+      needLogin: true,
+    },
   },
   {
     path: "/addressedit",
     name: "AddressEdit",
     component: () => import("../views/AddressEdit.vue"),
+    meta: {
+      needLogin: true,
+    },
   },
   {
     path: "/addresslist",
     name: "AddressList",
     component: () => import("../views/AddressList.vue"),
+    meta: {
+      needLogin: true,
+    },
   },
   {
     path: "/order",
     name: "Order",
     component: () => import("../views/Order.vue"),
+    meta: {
+      needLogin: true,
+    },
   },
   {
     path: "/ordersearch",
     name: "OrderSearch",
     component: () => import("../views/OrderSearch.vue"),
+    meta: {
+      needLogin: true,
+    },
   },
   {
     path: "*",
