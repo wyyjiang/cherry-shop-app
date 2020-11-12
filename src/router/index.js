@@ -82,9 +82,29 @@ const routes = [
     component: () => import("../views/Service.vue"),
   },
   {
-    path: "/change",
-    name: "Change",
+    path: "/changepassword",
+    name: "ChangePassword",
     component: () => import("../views/ChangePassword.vue"),
+  },
+  {
+    path: "/addressedit",
+    name: "AddressEdit",
+    component: () => import("../views/AddressEdit.vue"),
+  },
+  {
+    path: "/addresslist",
+    name: "AddressList",
+    component: () => import("../views/AddressList.vue"),
+  },
+  {
+    path: "/order",
+    name: "Order",
+    component: () => import("../views/Order.vue"),
+  },
+  {
+    path: "/ordersearch",
+    name: "OrderSearch",
+    component: () => import("../views/OrderSearch.vue"),
   },
   {
     path: "*",

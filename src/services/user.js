@@ -3,15 +3,16 @@
   password:密码
   pid:商品id
   pnum:商品数量
+  addres:收货地址
 */
 
 // 取user
-function getUser() {
+export function getUser() {
   return JSON.parse(localStorage.getItem("user"));
 }
 
 // 存储user
-function setUser(user) {
+export function setUser(user) {
   localStorage.setItem("user", JSON.stringify(user));
 }
 
@@ -112,13 +113,20 @@ export function searchCartAPI(uid) {
 }
 
 // 添加地址接口
-export function addAddressAPI(uid, username, country, address, telphone) {
+export function addAddressAPI(
+  uid,
+  username,
+  province,
+  country,
+  city,
+  address,
+  telphone
+) {
   let user = getUser();
   const index = user[uid].address.length; // 新添加的地址在地址列表中的索引位
   user[uid].address.push({
     username: username,
-    country: country,
-    address: address,
+    address: province + country + city + address,
     telphone: telphone,
   });
   setUser(user);

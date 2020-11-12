@@ -90,7 +90,7 @@ export default {
   async created() {
     // 判断此商品是否收藏
     let like = getCollectAPI(getToken());
-    if (like.indexOf(this.$route.query.id) > -1) {
+    if (like.indexOf(parseInt(this.$route.query.id)) > -1) {
       this.isCollected = true;
     } else {
       this.isCollected = false;
@@ -125,7 +125,7 @@ export default {
       Toast.success("购买成功！");
     },
     toCollect() {
-      const c = collectAPI(getToken(), this.$route.query.id);
+      const c = collectAPI(getToken(), parseInt(this.$route.query.id));
       if (c.code == 1) {
         Toast.success(c.message);
         this.isCollected = true;
