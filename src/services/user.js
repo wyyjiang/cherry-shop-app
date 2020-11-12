@@ -123,10 +123,10 @@ export function addAddressAPI(
   county
 ) {
   let user = getUser();
-  let a = Math.floor(Math.random() * (100000000 -1) + 1)
+  var timestamp = Date.parse(new Date());
   const index = user[uid].address.length; // 新添加的地址在地址列表中的索引位
   user[uid].address.push({
-    id:a,
+    id:timestamp,
     name: username,
     tel: telphone,
     address: province + city + county + addressDetail,
