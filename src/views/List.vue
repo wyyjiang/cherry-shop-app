@@ -41,6 +41,7 @@ import { get } from "@/utils/request";
 import { getToken } from "@/utils/tools.js";
 import { addCartAPI } from "@/services/user.js";
 import { Toast } from "vant";
+import { isLogined } from "../utils/tools";
 
 export default {
   data() {
@@ -72,9 +73,13 @@ export default {
       });
     },
     toCart(id) {
-      let uid = getToken();
-      addCartAPI(uid, id, 1);
-      Toast.success("加入购物车成功！");
+      if (isLogined()) {
+        let uid = getToken();
+        addCartAPI(uid, id, 1);
+        Toast.success("加入购物车成功！");
+      } else {
+        Toast.fail("请先登录！");
+      }
     },
     onLoad() {
       this.loadData();

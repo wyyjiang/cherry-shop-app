@@ -98,11 +98,6 @@ const routes = [
     component: () => import("../views/Chat.vue"),
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue"),
-  },
-  {
     path: "/query",
     name: "Query",
     component: () => import("../views/Query.vue"),

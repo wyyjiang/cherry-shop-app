@@ -27,7 +27,7 @@ export function regAPI(uid, password) {
       collect: [], // 收藏
       cart: {}, // 购物车
       address: [], // 地址
-      order: [], // 订单信息
+      order: {}, // 订单信息
     };
     setUser(user);
     return { message: "注册成功！", code: 1 };
@@ -123,14 +123,14 @@ export function addAddressAPI(
   county
 ) {
   let user = getUser();
-  let a = Math.floor(Math.random() * (100000000 -1) + 1)
+  let a = Math.floor(Math.random() * (100000000 - 1) + 1);
   const index = user[uid].address.length; // 新添加的地址在地址列表中的索引位
   user[uid].address.push({
-    id:a,
+    id: a,
     name: username,
     tel: telphone,
     address: province + city + county + addressDetail,
-    isDefault:false
+    isDefault: false,
   });
   setUser(user);
   return { message: "添加地址成功！", code: 1, index: index };
@@ -170,5 +170,31 @@ export function searchAddressAPI(uid) {
 // }
 
 // 新增订单接口
+export function addOrderAPI(uid, site, product, price) {
+  let user = getUser();
+  let date = new Date();
+  const orderID =
+    "" +
+    date.getFullYear() +
+    (date.getMonth() + 1) +
+    date.getDate() +
+    date.getHours() +
+    date.getMinutes() +
+    date.getSeconds();
+  // site:{username:xxx,telphone:xxx,address:xxx}
+  // product:{name:xxx,num:xxx,price:xxx,img:xxx}
+  user[uid].order[orderID] = {
+    orderID: orderID,
+    time: date,
+    address: site,
+    product: product,
+    price: price,
+  };
+  setUser(user);
+}
 
 // 查询订单接口
+export function searchOrderAPI(uid) {
+  let user = getUser();
+  return user[uid].order;
+}

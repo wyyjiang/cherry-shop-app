@@ -35,12 +35,12 @@
             />
             Cherry商城
           </div>
-          <div class="product_item" v-for="item in 8" :key="item">
+          <div class="product_item" v-for="item in list" :key="item.id">
             <van-card
-              num="2"
-              price="2.00"
-              title="商品标题"
-              thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+              :num="item.num"
+              :price="item.price"
+              :title="item.title"
+              :thumb="item.img"
             >
             </van-card>
           </div>
@@ -48,7 +48,7 @@
       </div>
       <div class="submit">
         <van-submit-bar
-          :price="3050"
+          :price="sum"
           button-text="提交订单"
           @submit="onSubmit"
         />
@@ -61,13 +61,23 @@
 export default {
   name: "Order",
   data() {
-    return {};
+    return {
+      list: [],
+      sum: 0,
+    };
   },
   methods: {
     returnRef() {
       history.back(-1);
     },
     onSubmit() {},
+  },
+  async created() {
+    let product = JSON.parse(this.$route.query.product);
+    this.list = product;
+    this.list.forEach((item) => {
+      this.sum += item.num * item.price * 100;
+    });
   },
 };
 </script>

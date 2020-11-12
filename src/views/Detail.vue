@@ -11,7 +11,7 @@
     <div class="content">
       <img class="picture" :src="goods.goods_big_logo | dalImg" alt="" />
       <div class="content_header">
-        <div class="content_left">￥{{ goods.goods_price }}</div>
+        <div class="content_left">￥{{ goods.goods_price.toFixed(2) }}</div>
         <div class="content_right">促销中</div>
       </div>
       <van-notice-bar
@@ -85,7 +85,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      goods: {},
+      goods: { goods_price: 1 },
       list: "",
       showList: "",
       isCollected: false,
@@ -106,14 +106,11 @@ export default {
     const res = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
-
-    console.log(res);
     this.goods = res.data.message;
     // 商品介绍
     const res1 = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
-
     this.list = res1.data.message.goods_introduce;
     var product_text = document.querySelector(".p_introduce_main");
     product_text.innerHTML = this.list;
@@ -149,7 +146,19 @@ export default {
     },
     buyProduct() {
       if (isLogined()) {
-        Toast.success("购买成功！");
+        let product = [
+          {
+            id: this.$route.query.id,
+            num: 1,
+            img: this.goods.goods_small_logo,
+            title: this.goods.goods_name,
+            price: this.goods.goods_price.toFixed(2),
+          },
+        ];
+        this.$router.push({
+          name: "Order",
+          query: { product: JSON.stringify(product) },
+        });
       } else {
         Toast.fail("购买失败！");
         this.$router.push({ name: "Login" });

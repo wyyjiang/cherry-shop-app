@@ -124,7 +124,27 @@ export default {
       });
     },
     onSubmit() {
-      Toast.success("提交订单成功！");
+      // Toast.success("提交订单成功！");
+      if (this.carts.filter((item) => item.checked).length != 0) {
+        let product = [];
+        this.carts
+          .filter((item) => item.checked)
+          .forEach((item) => {
+            product.push({
+              id: item.goods_id,
+              num: item.goods_num,
+              img: item.goods_small_logo,
+              title: item.goods_name,
+              price: item.goods_price.toFixed(2),
+            });
+          });
+        this.$router.push({
+          name: "Order",
+          query: { product: JSON.stringify(product) },
+        });
+      } else {
+        Toast.fail("请先选择商品！");
+      }
     },
     delProduct(id) {
       deleteCartAPI(getToken(), id);
