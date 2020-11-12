@@ -1,8 +1,13 @@
 <template>
   <!-- 注册 -->
-  <div>
+  <div class="change">
     <div>
-      <van-nav-bar title="修改密码" left-arrow @click-left="onClickLeft" />
+      <van-nav-bar
+        class="change_main"
+        title="修改密码"
+        left-arrow
+        @click-left="onClickLeft"
+      />
     </div>
     <div class="reg">
       <img style="width: 70%" src="../assets/cherry5.jpg" alt="" />
@@ -11,25 +16,25 @@
           v-model="password"
           type="password"
           name="password"
-          label="密码"
-          placeholder="密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
+          label="原密码"
+          placeholder="原密码"
+          :rules="[{ required: true, message: '请填写原密码' }]"
         />
         <van-field
           v-model="repwd"
           type="password"
           name="repwd"
           label="新密码"
-          placeholder="密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
+          placeholder="新密码"
+          :rules="[{ required: true, message: '请填写新密码' }]"
         />
         <van-field
           v-model="repwds"
           type="password"
           name="repwds"
           label="确认新密码"
-          placeholder="请再一次密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
+          placeholder="再一次输入新密码"
+          :rules="[{ required: true, message: '请填写新密码' }]"
         />
         <div style="margin: 16px">
           <van-button round block type="info" native-type="submit">
@@ -94,5 +99,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.change_main {
+  background-color: #ffc7c7;
 }
 </style>

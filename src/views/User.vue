@@ -1,11 +1,16 @@
 <template>
   <div class="user">
     <div class="top">
-      <van-nav-bar title="用户个人中心"></van-nav-bar>
+      <van-nav-bar title="个人中心"></van-nav-bar>
     </div>
     <div class="change">
       <div>
-        <van-uploader :after-read="afterRead" />
+        <!-- <van-uploader :after-read="afterRead" /> -->
+        <div>
+          <el-avatar
+            src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2116474643,2614414860&fm=26&gp=0.jpg"
+          ></el-avatar>
+        </div>
         <div class="change_name">
           <div class="change_conter">
             <div>账号：{{ names }}</div>
@@ -17,43 +22,40 @@
       </div>
     </div>
     <div class="big_conter">
-      <router-link :to="{ name: 'Change' }">
-        <div class="conter">
-          <div><i class="el-icon-present"></i><span>修改信息</span></div>
+      <div class="conter" @click="toChangePassword">
+        <div><i class="el-icon-lock"></i><span>修改密码</span></div>
+        <i class="el-icon-arrow-right"></i>
+      </div>
+      <div class="conter_childer">
+        <div class="conter" @click="toAddress">
+          <div>
+            <i class="el-icon-location-information"></i
+            ><span>收货地址管理</span>
+          </div>
           <i class="el-icon-arrow-right"></i>
         </div>
-      </router-link>
-      <div class="conter_childer">
-        <router-link :to="{ name: 'Service' }">
-          <div class="conter">
-            <div><i class="el-icon-present"></i><span>收藏商品</span></div>
-            <i class="el-icon-arrow-right"></i>
+        <div class="conter" @click="toCollect">
+          <div><i class="el-icon-collection"></i><span>我的收藏</span></div>
+          <i class="el-icon-arrow-right"></i>
+        </div>
+        <div class="conter" @click="toCollect">
+          <div>
+            <i class="el-icon-shopping-cart-full"></i><span>我的订单</span>
           </div>
-        </router-link>
-        <router-link :to="{ name: 'AddressList' }">
-          <div class="conter">
-            <div><i class="el-icon-present"></i><span>收货地址管理</span></div>
-            <i class="el-icon-arrow-right"></i>
-          </div>
-        </router-link>
-        <router-link :to="{ name: 'Service' }">
-          <div class="conter">
-            <div><i class="el-icon-present"></i><span>客服</span></div>
-            <i class="el-icon-arrow-right"></i>
-          </div>
-        </router-link>
-
-        <router-link :to="{ name: 'AboutUs' }">
-          <div class="conter">
-            <div><i class="el-icon-present"></i><span>关于我们</span></div>
-            <i class="el-icon-arrow-right"></i>
-          </div>
-        </router-link>
+          <i class="el-icon-arrow-right"></i>
+        </div>
+        <div class="conter" @click="toService">
+          <div><i class="el-icon-service"></i><span>我的客服</span></div>
+          <i class="el-icon-arrow-right"></i>
+        </div>
+        <div class="conter" @click="toAboutUs">
+          <div><i class="el-icon-user"></i><span>关于我们</span></div>
+          <i class="el-icon-arrow-right"></i>
+        </div>
       </div>
-
       <div class="conter">
         <div @click="onclick">
-          <i class="el-icon-present"></i><span>退出登录</span>
+          <i class="el-icon-switch-button"></i><span>退出登录</span>
         </div>
         <i class="el-icon-arrow-right"></i>
       </div>
@@ -73,6 +75,21 @@ export default {
     };
   },
   methods: {
+    toChangePassword() {
+      this.$router.push({ name: "ChangePassword" });
+    },
+    toCollect() {
+      this.$router.push({ name: "Collect" });
+    },
+    toAddress() {
+      this.$router.push({ name: "AddressList" });
+    },
+    toService() {
+      this.$router.push({ name: "Service" });
+    },
+    toAboutUs() {
+      this.$router.push({ name: "AboutUs" });
+    },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       console.log(file);
@@ -92,12 +109,16 @@ export default {
 </script>
 
 <style scoped>
+.van-nav-bar {
+  background-color: #ffc7c7;
+}
 .user {
   background: rgb(243, 243, 243);
 }
 .change {
   background: #fff;
   padding: 5px 15px;
+  margin-top: 6px;
   border-bottom: 1px solid #f5f3f3;
 }
 .change img {
@@ -112,6 +133,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 10px;
 }
 .conter {
   height: 40px;
@@ -137,5 +159,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.el-avatar {
+  width: 70px;
+  height: 70px;
 }
 </style>

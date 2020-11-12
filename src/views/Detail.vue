@@ -88,24 +88,30 @@ export default {
   },
   components: {},
   async created() {
+    console.log(1);
     // 判断此商品是否收藏
     let like = getCollectAPI(getToken());
-    console.log(like);
-    if (like.indexOf(this.$route.query.id) > -1) {
+    console.log("a");
+    if (like.indexOf(parseInt(this.$route.query.id)) > -1) {
+      console.log(2);
       this.isCollected = true;
     } else {
       this.isCollected = false;
+      console.log(3);
     }
-
+    console.log(4);
     const res = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
+
     console.log(res);
     this.goods = res.data.message;
     console.log(this.goods);
+    console.log(5);
     const res1 = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
+    console.log(6);
     this.list = res1.data.message.goods_introduce;
     var product_text = document.querySelector(".p_introduce_main");
     product_text.innerHTML = this.list;
@@ -128,8 +134,7 @@ export default {
       Toast.success("购买成功！");
     },
     toCollect() {
-      const c = collectAPI(getToken(), this.$route.query.id);
-      console.log(c);
+      const c = collectAPI(getToken(), parseInt(this.$route.query.id));
       if (c.code == 1) {
         Toast.success(c.message);
         this.isCollected = true;
