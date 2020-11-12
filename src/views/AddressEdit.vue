@@ -14,7 +14,8 @@
 <script>
 import { Toast } from "vant";
 import { areaList } from "../utils/areaList";
-import { getUser } from "../services/user";
+import { addAddressAPI } from "../services/user";
+import { getToken } from "../utils/tools";
 export default {
   data() {
     return {
@@ -23,18 +24,20 @@ export default {
     };
   },
   methods: {
-    onSave() {
+    onSave(save) {
       Toast("保存成功");
-      console.log( getUser());
-      // addAddressAPI(
-      //   uid,
-      //   save.name,
-      //   save.postalCode,
-      //   save.city,
-      //   save.county,
-      //   save.addressDetail,
-      //   save.tel
-      // );
+      console.log(save);
+      const uid = getToken();
+      console.log(uid);
+      addAddressAPI(
+        uid,
+        save.name,
+        save.tel,
+        save.addressDetail,
+        save.province,
+        save.city,
+        save.county
+      );
     },
     onDelete() {
       Toast("delete");

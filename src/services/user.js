@@ -116,18 +116,21 @@ export function searchCartAPI(uid) {
 export function addAddressAPI(
   uid,
   username,
+  telphone,
+  addressDetail,
   province,
-  country,
   city,
-  address,
-  telphone
+  county
 ) {
   let user = getUser();
+  let a = Math.floor(Math.random() * (100000000 -1) + 1)
   const index = user[uid].address.length; // 新添加的地址在地址列表中的索引位
   user[uid].address.push({
-    username: username,
-    address: province + country + city + address,
-    telphone: telphone,
+    id:a,
+    name: username,
+    tel: telphone,
+    address: province + city + county + addressDetail,
+    isDefault:false
   });
   setUser(user);
   return { message: "添加地址成功！", code: 1, index: index };
@@ -147,24 +150,24 @@ export function searchAddressAPI(uid) {
 }
 
 // 修改地址接口
-export function editAddressAPI(
-  uid,
-  index,
-  username,
-  country,
-  address,
-  telphone
-) {
-  let user = getUser();
-  user[uid].address[index] = {
-    username: username,
-    country: country,
-    address: address,
-    telphone: telphone,
-  };
-  setUser(user);
-  return { message: "修改成功！", code: 1 };
-}
+// export function editAddressAPI(
+//   uid,
+//   index,
+//   username,
+//   country,
+//   address,
+//   telphone
+// ) {
+//   let user = getUser();
+//   user[uid].address[index] = {
+//     username: username,
+//     country: country,
+//     address: address,
+//     telphone: telphone,
+//   };
+//   setUser(user);
+//   return { message: "修改成功！", code: 1 };
+// }
 
 // 新增订单接口
 
