@@ -49,7 +49,12 @@
     </div>
     <div class="Gouwu">
       <van-goods-action :fixed="false">
-        <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" />
+        <van-goods-action-icon
+          icon="chat-o"
+          text="客服"
+          color="#07c160"
+          @click="toChat"
+        />
         <van-goods-action-icon icon="cart-o" text="购物车" @click="toCart" />
         <van-goods-action-icon
           @click="toCollect"
@@ -101,11 +106,14 @@ export default {
     const res = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
+
+    console.log(res);
     this.goods = res.data.message;
     // 商品介绍
     const res1 = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
+
     this.list = res1.data.message.goods_introduce;
     var product_text = document.querySelector(".p_introduce_main");
     product_text.innerHTML = this.list;
@@ -124,6 +132,11 @@ export default {
         Toast.fail("请先登录！");
         this.$router.push({ name: "Login" });
       }
+    },
+    toChat() {
+      this.$router.push({
+        name: "Chat",
+      });
     },
     addProduct() {
       if (isLogined()) {

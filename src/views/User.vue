@@ -79,16 +79,16 @@ export default {
       this.$router.push({ name: "ChangePassword" });
     },
     toCollect() {
-      this.$router.push({ name: "Collect" });
+      this.$router.push({ name: "Query" });
     },
     toAddress() {
       this.$router.push({ name: "AddressList" });
     },
     toService() {
-      this.$router.push({ name: "Service" });
+      this.$router.push({ name: "Chat" });
     },
     toAboutUs() {
-      this.$router.push({ name: "AboutUs" });
+      this.$router.push({ name: "About" });
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器

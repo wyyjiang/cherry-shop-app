@@ -93,6 +93,21 @@ const routes = [
     },
   },
   {
+    path: "/chat",
+    name: "Chat",
+    component: () => import("../views/Chat.vue"),
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: () => import("../views/About.vue"),
+  },
+  {
+    path: "/query",
+    name: "Query",
+    component: () => import("../views/Query.vue"),
+  },
+  {
     path: "/addressedit",
     name: "AddressEdit",
     component: () => import("../views/AddressEdit.vue"),
