@@ -32,7 +32,7 @@
 
 <script>
 import { getCollectAPI } from "@/services/user.js";
-import { getToken } from "@/utils/tools.js";
+import { getToken} from "@/utils/tools.js";
 import { get } from "@/utils/request.js";
 
 export default {
@@ -62,6 +62,7 @@ export default {
   async created() {
     // 调取用户的收藏列表
     const collect_list = getCollectAPI(getToken());
+  
     // 判断用户的收藏列表是否为空
     if (collect_list.length == 0) {
       this.isEmpty = true;
