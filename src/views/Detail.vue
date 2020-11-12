@@ -49,7 +49,12 @@
     </div>
     <div class="Gouwu">
       <van-goods-action :fixed="false">
-        <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" />
+        <van-goods-action-icon
+          icon="chat-o"
+          text="客服"
+          color="#07c160"
+          @click="toChat"
+        />
         <van-goods-action-icon icon="cart-o" text="购物车" @click="toCart" />
         <van-goods-action-icon
           @click="toCollect"
@@ -74,7 +79,7 @@
 <script>
 import { get } from "@/utils/request.js";
 import { addCartAPI, getCollectAPI, collectAPI } from "@/services/user.js";
-import { getToken } from "@/utils/tools.js";
+import { getToken, isLogined } from "@/utils/tools.js";
 import { Toast } from "vant";
 
 export default {
@@ -83,26 +88,32 @@ export default {
       goods: {},
       list: "",
       showList: "",
-      isCollected: true,
+      isCollected: false,
     };
   },
   components: {},
   async created() {
-    // 判断此商品是否收藏
-    let like = getCollectAPI(getToken());
-    if (like.indexOf(parseInt(this.$route.query.id)) > -1) {
-      this.isCollected = true;
-    } else {
-      this.isCollected = false;
+    if (isLogined()) {
+      // 判断此商品是否收藏
+      let like = getCollectAPI(getToken());
+      if (like.indexOf(parseInt(this.$route.query.id)) > -1) {
+        this.isCollected = true;
+      } else {
+        this.isCollected = false;
+      }
     }
-
+    // 商品信息
     const res = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
+
+    console.log(res);
     this.goods = res.data.message;
+    // 商品介绍
     const res1 = await get(
       "/api/public/v1/goods/detail?goods_id=" + this.$route.query.id
     );
+
     this.list = res1.data.message.goods_introduce;
     var product_text = document.querySelector(".p_introduce_main");
     product_text.innerHTML = this.list;
@@ -113,28 +124,53 @@ export default {
       history.back(-1);
     },
     toCart() {
+      if (isLogined()) {
+        this.$router.push({
+          name: "Cart",
+        });
+      } else {
+        Toast.fail("请先登录！");
+        this.$router.push({ name: "Login" });
+      }
+    },
+    toChat() {
       this.$router.push({
-        name: "Cart",
+        name: "Chat",
       });
     },
     addProduct() {
-      Toast.success("加入购物车成功！");
-      addCartAPI(getToken(), this.$route.query.id, 1);
+      if (isLogined()) {
+        Toast.success("加入购物车成功！");
+        addCartAPI(getToken(), this.$route.query.id, 1);
+      } else {
+        Toast.fail("加入购物车失败，请先登录！");
+        this.$router.push({ name: "Login" });
+      }
     },
     buyProduct() {
-      Toast.success("购买成功！");
+      if (isLogined()) {
+        Toast.success("购买成功！");
+      } else {
+        Toast.fail("购买失败！");
+        this.$router.push({ name: "Login" });
+      }
     },
     toCollect() {
-      const c = collectAPI(getToken(), parseInt(this.$route.query.id));
-      if (c.code == 1) {
-        Toast.success(c.message);
-        this.isCollected = true;
+      if (isLogined()) {
+        const c = collectAPI(getToken(), parseInt(this.$route.query.id));
+        if (c.code == 1) {
+          Toast.success(c.message);
+          this.isCollected = true;
+        } else {
+          Toast({
+            icon: "cross",
+            message: c.message,
+          });
+          this.isCollected = false;
+        }
       } else {
-        Toast({
-          icon: "cross",
-          message: c.message,
-        });
-        this.isCollected = false;
+        Toast.fail("加入收藏失败！");
+        this.$router.push({ name: "Login" });
       }
     },
   },

@@ -28,8 +28,21 @@
           </div>
         </div>
         <div class="product">
-          <div class="product_item">
-            <el-card shadow="never"> 从不显示 </el-card>
+          <div class="product_produce">
+            <van-icon
+              class="product_icon"
+              name="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1439821294,11327642&fm=26&gp=0.jpg"
+            />
+            Cherry商城
+          </div>
+          <div class="product_item" v-for="item in 8" :key="item">
+            <van-card
+              num="2"
+              price="2.00"
+              title="商品标题"
+              thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+            >
+            </van-card>
           </div>
         </div>
       </div>
@@ -89,6 +102,15 @@ export default {
   display: flex;
   align-items: center;
 }
+.product {
+  border-radius: 10px;
+  margin: 3% 4%;
+  background-color: #ffffff;
+  padding-bottom: 20px;
+}
+.product_item {
+  height: 100px;
+}
 .address_middle {
   flex: 1;
   margin: 0 10px;
@@ -116,7 +138,17 @@ export default {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin-top: 5px;
 }
-.product {
+.product_produce {
+  padding: 3%;
+  display: flex;
+  align-items: center;
+  color: #1c2b2d;
+  font-size: 15px;
+}
+.product_icon {
+  margin: 0 6px;
+}
+.van-card {
   background-color: #ffffff;
 }
 </style>
