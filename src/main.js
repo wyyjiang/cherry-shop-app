@@ -6,8 +6,6 @@ import router from "./router";
 
 var eventBus = new Vue();
 Vue.prototype.$eventBus = eventBus;
-var eventBus1 = new Vue();
-Vue.prototype.$eventBus1 = eventBus1;
 // import {
 //   CouponCell,
 //   CouponList,

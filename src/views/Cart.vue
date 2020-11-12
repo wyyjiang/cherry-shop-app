@@ -35,7 +35,7 @@
             <van-card
               :price="item.goods_price.toFixed(2)"
               :title="item.goods_name"
-              :thumb="item.goods_small_logo"
+              :thumb="item.goods_small_logo | dalImg"
               class="goods-card"
               @click-thumb="toDetail(item.goods_id)"
             >

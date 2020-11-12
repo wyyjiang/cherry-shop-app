@@ -16,14 +16,12 @@
           </div>
           <div class="address_middle">
             <div class="address_middle_top">
-              <i class="address_username">姜姜</i>
-              <i class="address_telphone">15136429343</i>
+              <i class="address_username">{{ user.username }}</i>
+              <i class="address_telphone">{{ user.tel }}</i>
             </div>
-            <div class="address_middle_bottom">
-              河南省郑州市中原区枫杨街道莲花街55号郑州千锋教育高新区校区
-            </div>
+            <div class="address_middle_bottom">{{ user.address }}</div>
           </div>
-          <div class="address_right">
+          <div class="address_right" @click="toAddressList">
             <i class="el-icon-arrow-right icon_right"></i>
           </div>
         </div>
@@ -40,7 +38,7 @@
               :num="item.num"
               :price="item.price"
               :title="item.title"
-              :thumb="item.img"
+              :thumb="item.img | dalImg"
             >
             </van-card>
           </div>
@@ -58,19 +56,48 @@
 </template>
 
 <script>
+import { Toast } from "vant";
+import { addOrderAPI, searchCartAPI, deleteCartAPI } from "../services/user.js";
+import { getToken } from "../utils/tools.js";
+
 export default {
   name: "Order",
   data() {
     return {
       list: [],
       sum: 0,
+      user: {
+        username: "姜姜",
+        tel: "15136429343",
+        address: "河南省郑州市金水区小铺新区",
+      },
     };
   },
   methods: {
     returnRef() {
       history.back(-1);
     },
-    onSubmit() {},
+    onSubmit() {
+      let product = []; // 购物车里的商品id
+      this.list.forEach((item) => {
+        product.push(parseInt(item.id));
+      });
+      let carts = searchCartAPI(getToken());
+      for (let item in carts) {
+        if (product.indexOf(parseInt(item)) > -1) {
+          deleteCartAPI(getToken(), item);
+        }
+      }
+      addOrderAPI(getToken(), this.user, this.list, this.sum);
+      Toast.success("购买成功！");
+      this.$router.replace({ name: "Home" });
+    },
+    toAddressList() {
+      this.$router.push({
+        name: "AddressList",
+        query: { select: true, product: JSON.stringify(this.list) },
+      });
+    },
   },
   async created() {
     let product = JSON.parse(this.$route.query.product);
@@ -78,6 +105,9 @@ export default {
     this.list.forEach((item) => {
       this.sum += item.num * item.price * 100;
     });
+    if (this.$route.query.user) {
+      this.user = JSON.parse(this.$route.query.user);
+    }
   },
 };
 </script>

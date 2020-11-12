@@ -1,14 +1,26 @@
 <template>
-  <van-address-edit
-    :area-list="areaList"
-    show-delete
-    show-search-result
-    :search-result="searchResult"
-    :area-columns-placeholder="['请选择', '请选择', '请选择']"
-    @save="onSave"
-    @delete="onDelete"
-    @change-detail="onChangeDetail"
-  />
+  <div class="addressedit">
+    <div class="top">
+      <van-nav-bar
+        class="addressedit_main"
+        title="地址修改"
+        left-arrow
+        @click-left="returnRef"
+      ></van-nav-bar>
+    </div>
+    <div class="addressedit_content">
+      <van-address-edit
+        :area-list="areaList"
+        show-delete
+        show-search-result
+        :search-result="searchResult"
+        :area-columns-placeholder="['请选择', '请选择', '请选择']"
+        @save="onSave"
+        @delete="onDelete"
+        @change-detail="onChangeDetail"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -24,8 +36,11 @@ export default {
     };
   },
   methods: {
+    returnRef() {
+      history.back(-1);
+    },
     onSave(save) {
-      Toast("保存成功");
+      Toast.success("保存成功");
       console.log(save);
       const uid = getToken();
       console.log(uid);
@@ -36,8 +51,10 @@ export default {
         save.addressDetail,
         save.province,
         save.city,
-        save.county
+        save.county,
+        save.isDefault
       );
+      this.$router.replace({ name: "AddressList" });
     },
     onDelete() {
       Toast("delete");
@@ -46,8 +63,8 @@ export default {
       if (val) {
         this.searchResult = [
           {
-            name: "黄龙万科中心",
-            address: "杭州市西湖区",
+            name: "枫杨街道",
+            address: "郑州市中原区",
           },
         ];
       } else {
@@ -58,5 +75,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.addressedit_main {
+  background-color: #ffc7c7;
+}
 </style>

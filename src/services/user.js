@@ -120,20 +120,27 @@ export function addAddressAPI(
   addressDetail,
   province,
   city,
-  county
+  county,
+  isDefault,
 ) {
   let user = getUser();
-  let a = Math.floor(Math.random() * (100000000 - 1) + 1);
+  var timestamp = Date.parse(new Date());
   const index = user[uid].address.length; // 新添加的地址在地址列表中的索引位
   user[uid].address.push({
-    id: a,
+    id: timestamp,
     name: username,
     tel: telphone,
     address: province + city + county + addressDetail,
-    isDefault: false,
+    isDefault: isDefault,
   });
   setUser(user);
   return { message: "添加地址成功！", code: 1, index: index };
+}
+
+//商品订单地址接口
+export function showAddressAPI(uid) {
+  let user = getUser();
+  return user[uid].address.address;
 }
 // 删除地址接口
 export function delAddressAPI(uid, index) {
