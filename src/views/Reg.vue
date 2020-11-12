@@ -1,38 +1,48 @@
 <template>
   <!-- 注册 -->
   <div class="reg">
-    <img style="width: 70%" src="../assets/cherry5.jpg" alt="" />
-    <van-form @submit="onSubmit">
-      <van-field
-        v-model="username"
-        name="userName"
-        label="用户名"
-        placeholder="用户名"
-        :rules="[{ required: true, message: '请填写用户名' }]"
-      />
-      <van-field
-        v-model="password"
-        type="password"
-        name="password"
-        label="密码"
-        placeholder="密码"
-        :rules="[{ required: true, message: '请填写密码' }]"
-      />
-      <van-field
-        v-model="repwd"
-        type="password"
-        name="repwd"
-        label="确认密码"
-        placeholder="请再一次密码"
-        :rules="[{ required: true, message: '请填写密码' }]"
-      />
-      <div style="margin: 16px">
-        <van-button round block type="info" native-type="submit">
-          提交
-        </van-button>
-      </div>
-    </van-form>
-    <router-link :to="{ name: 'Login' }">已有账号,我要登录</router-link>
+    <div class="top">
+      <van-nav-bar
+        class="reg_main"
+        title="注册"
+        left-arrow
+        @click-left="returnRef"
+      ></van-nav-bar>
+    </div>
+    <div class="reg_content">
+      <img style="width: 70%" src="../assets/cherry5.jpg" alt="" />
+      <van-form @submit="onSubmit">
+        <van-field
+          v-model="username"
+          name="userName"
+          label="用户名"
+          placeholder="用户名"
+          :rules="[{ required: true, message: '请填写用户名' }]"
+        />
+        <van-field
+          v-model="password"
+          type="password"
+          name="password"
+          label="密码"
+          placeholder="密码"
+          :rules="[{ required: true, message: '请填写密码' }]"
+        />
+        <van-field
+          v-model="repwd"
+          type="password"
+          name="repwd"
+          label="确认密码"
+          placeholder="请再一次密码"
+          :rules="[{ required: true, message: '请填写密码' }]"
+        />
+        <div style="margin: 16px">
+          <van-button round block type="info" native-type="submit">
+            提交
+          </van-button>
+        </div>
+      </van-form>
+      <router-link :to="{ name: 'Login' }">已有账号,我要登录</router-link>
+    </div>
   </div>
 </template>
 
@@ -70,12 +80,23 @@ export default {
         }
       }
     },
+    returnRef() {
+      history.back(-1);
+    },
   },
 };
 </script>
 
 <style scoped>
 .reg {
+  display: flex;
+  flex-direction: column;
+}
+.reg_main {
+  background-color: #ffc7c7;
+}
+.reg_content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;

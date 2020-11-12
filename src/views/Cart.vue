@@ -26,23 +26,26 @@
         </div>
         <div class="product">
           <div class="item" v-for="item in carts" :key="item.goods_id">
+            <van-checkbox
+              v-model="item.checked"
+              shape="square"
+              icon-size="1rem"
+            >
+            </van-checkbox>
             <van-card
               :price="item.goods_price.toFixed(2)"
-              desc="描述信息"
               :title="item.goods_name"
               :thumb="item.goods_small_logo"
-              :num="item.goods_num"
               class="goods-card"
+              @click-thumb="toDetail(item.goods_id)"
             >
-              <template #tag>
-                <van-checkbox
-                  v-model="item.checked"
-                  shape="square"
-                  icon-size="1rem"
-                ></van-checkbox>
-              </template>
               <template #footer>
-                <van-stepper v-model="item.goods_num" disable-input />
+                <van-stepper
+                  v-model="item.goods_num"
+                  disable-input
+                  @minus="minus(item.goods_id)"
+                  @plus="plus(item.goods_id)"
+                />
                 <van-button
                   type="danger"
                   size="small"
@@ -68,7 +71,7 @@
 </template>
 
 <script>
-import { searchCartAPI, deleteCartAPI } from "@/services/user.js";
+import { addCartAPI, searchCartAPI, deleteCartAPI } from "@/services/user.js";
 import { getToken } from "@/utils/tools.js";
 import { get } from "@/utils/request.js";
 import { Toast } from "vant";
@@ -82,7 +85,7 @@ export default {
       carts: [],
     };
   },
-  created() {
+  async created() {
     // 获取用户的购物车列表
     const cart_list = searchCartAPI(getToken());
     // 判断购物车列表是否为空
@@ -94,28 +97,17 @@ export default {
       this.isEmpty = false;
     }
     // 获取商品信息
-    // console.log(cart_list);
-    // console.log(cart_list_arr);
-    const arr = [];
-    cart_list_arr.map(async (item) => {
-      arr.push(get("/api/public/v1/goods/detail", { goods_id: item }));
+    let arr = [];
+    await cart_list_arr.map((item) => {
+      get("/api/public/v1/goods/detail", { goods_id: item }).then((res) => {
+        arr.push({
+          ...res.data.message,
+          checked: false,
+          goods_num: cart_list[item],
+        });
+      });
     });
-    Promise.all(arr).then((res) => {
-      console.log(res);
-    });
-    // cart_list_arr.map(async (item) => {
-    //   await get("/api/public/v1/goods/detail", { goods_id: item }).then(
-    //     (res) => {
-    //       console.log({
-    //         ...res.data.message,
-    //         checked: false,
-    //         goods_num: cart_list[item],
-    //       });
-    //       this.carts.push(res.data.message);
-    //     }
-    //   );
-    // });
-    // console.log(this.carts);
+    this.carts = arr;
   },
   methods: {
     toHome() {
@@ -123,13 +115,48 @@ export default {
         name: "Home",
       });
     },
+    toDetail(id) {
+      this.$router.push({
+        name: "Detail",
+        query: {
+          id,
+        },
+      });
+    },
     onSubmit() {
       Toast.success("提交订单成功！");
     },
     delProduct(id) {
       deleteCartAPI(getToken(), id);
-
+      // 获取用户的购物车列表
+      const cart_list = searchCartAPI(getToken());
+      // 判断购物车列表是否为空
+      const cart_list_arr = Object.keys(cart_list);
+      const cart_list_length = cart_list_arr.length;
+      if (cart_list_length == 0) {
+        this.isEmpty = true;
+      } else {
+        this.isEmpty = false;
+      }
+      // 获取商品信息
+      let arr = [];
+      cart_list_arr.map((item) => {
+        get("/api/public/v1/goods/detail", { goods_id: item }).then((res) => {
+          arr.push({
+            ...res.data.message,
+            checked: false,
+            goods_num: cart_list[item],
+          });
+        });
+      });
+      this.carts = arr;
       Toast.success("删除商品成功！");
+    },
+    minus(id) {
+      addCartAPI(getToken(), id, -1);
+    },
+    plus(id) {
+      addCartAPI(getToken(), id, 1);
     },
   },
   watch: {},
@@ -152,7 +179,7 @@ export default {
     sumPrice() {
       return this.carts
         .filter((item) => item.checked)
-        .reduce((pre, cur) => pre + cur.goods_price * cur.goods_num, 0);
+        .reduce((pre, cur) => pre + cur.goods_price * cur.goods_num * 100, 0);
     },
   },
 };
@@ -173,10 +200,6 @@ export default {
 .empty {
   margin-top: 25%;
 }
-.bottom-button {
-  width: 160px;
-  height: 40px;
-}
 .card_all,
 .card_one {
   margin: 2% 3%;
@@ -189,24 +212,8 @@ export default {
   font-style: normal;
   padding-left: 5%;
 }
-.el-card__body {
-  display: flex;
-  align-items: center;
-}
-.card_one_img {
-  width: 20%;
-}
-.el-input {
-  width: 20px;
-}
-.van-card__tag {
-  margin-top: 40%;
-}
-.van-image {
-  padding-left: 30%;
-}
 .van-card__content {
-  padding-left: 10%;
+  margin-left: 3%;
 }
 .van-submit-bar {
   position: static;
@@ -216,10 +223,14 @@ export default {
   justify-content: flex-end;
   align-items: center;
 }
-.van-stepper > input {
-  background-color: #fff;
+.item {
+  margin: 0 3%;
+  display: flex;
 }
 .van-card {
-  margin: 3%;
+  flex: 1;
+}
+.van-checkbox {
+  padding-right: 5%;
 }
 </style>
