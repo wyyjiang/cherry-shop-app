@@ -36,7 +36,8 @@ export default {
         save.addressDetail,
         save.province,
         save.city,
-        save.county
+        save.county,
+        save.isDefault
       );
     },
     onDelete() {

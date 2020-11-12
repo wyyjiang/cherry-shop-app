@@ -4,7 +4,6 @@
       <van-address-list
         v-model="chosenAddressId"
         :list="list"
-        default-tag-text="默认"
         @add="onAdd"
         @edit="onEdit"
       />
@@ -17,7 +16,12 @@
 
 <script>
 import { Toast } from "vant";
-import { searchAddressAPI, delAddressAPI } from "../services/user";
+import {
+  searchAddressAPI,
+  delAddressAPI,
+  getUser,
+  // setUser,
+} from "../services/user";
 import { getToken } from "../utils/tools";
 export default {
   data() {
@@ -42,17 +46,29 @@ export default {
     onClickLeft() {
       history.back(-1);
     },
-    select(item, index) {
-      console.log(item, index);
-    },
     onclick() {
-      localStorage.item();
+      getUser();
     },
+    // onselect(item, index) {
+    //   this.$eventBus.$emit("add", index);
+    // },
   },
   created() {
     const uid = getToken();
+    // const user = getUser();
     this.list = searchAddressAPI(uid);
-    
+    // this.$eventBus.$on("add", (e) => {
+    //   console.log(1);
+    //   const user = getUser();
+    //   user[uid].address[e].isDefault = true;
+    //   this.isDefault = user[uid].address[e].isDefault;
+    //   setUser(user);
+    // });
+    // user[uid].address[0].isDefault = true;
+    // this.isDefault = user[uid].address[0].isDefault;
+    // console.log(user[uid].address[0].isDefault);
+    // setUser(user);
+    // console.log( setUser(user));
   },
 };
 </script>

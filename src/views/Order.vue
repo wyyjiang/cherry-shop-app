@@ -20,7 +20,8 @@
               <i class="address_telphone">15136429343</i>
             </div>
             <div class="address_middle_bottom">
-              河南省郑州市中原区枫杨街道莲花街55号郑州千锋教育高新区校区
+             
+              {{addres}}
             </div>
           </div>
           <div class="address_right">
@@ -58,17 +59,38 @@
 </template>
 
 <script>
+import { getUser} from "../services/user";
+import { getToken } from "../utils/tools";
+import { Toast } from "vant";
 export default {
   name: "Order",
   data() {
-    return {};
+    return {
+      addres: "",
+    };
   },
   methods: {
     returnRef() {
       history.back(-1);
     },
-    onSubmit() {},
+    onSubmit() {
+      console.log(2);
+    },
   },
+  created(){
+    // this.$eventBus.$on("add",(e)=>{
+    //   console.log(e);
+    // })
+     console.log(1);
+      const user = getUser();
+      const uid = getToken();
+      if (user[uid].isDefault) {
+        this.addres = user[uid].address.address;
+      } else {
+        Toast("请先勾选地址");
+        this.$router.push({ name: "AddressList" });
+      }
+  }
 };
 </script>
 
