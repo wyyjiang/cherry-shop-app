@@ -88,7 +88,7 @@ export default {
       this.$router.push({ name: "Service" });
     },
     toAboutUs() {
-      this.$router.push({ name: "AboutUs" });
+      this.$router.push({ name: "About" });
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
