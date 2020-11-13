@@ -2,6 +2,7 @@ import Vue from "vue";
 import ElementUI from "element-ui"; // 引入element-ui
 import Vant from "vant"; // 引入vant
 import App from "./App.vue";
+import "vant/lib/index.css";
 import router from "./router";
 
 var eventBus = new Vue();
