@@ -124,7 +124,6 @@ export default {
       });
     },
     onSubmit() {
-      // Toast.success("提交订单成功！");
       if (this.carts.filter((item) => item.checked).length != 0) {
         let product = [];
         this.carts

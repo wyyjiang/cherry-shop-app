@@ -160,7 +160,7 @@ export default {
           query: { product: JSON.stringify(product) },
         });
       } else {
-        Toast.fail("购买失败！");
+        Toast.fail("购买失败，请先登录！");
         this.$router.push({ name: "Login" });
       }
     },

@@ -1,9 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import { isLogined } from "../utils/tools";
-// import { isLogined } from "@/utils/tools";
 import Home from "../views/Home.vue";
-// import { Toast } from "vant";
 
 const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location, onResolve, onReject) {
@@ -75,14 +73,9 @@ const routes = [
     },
   },
   {
-    path: "/aboutUs",
+    path: "/aboutus",
     name: "AboutUs",
     component: () => import("../views/AboutUs.vue"),
-  },
-  {
-    path: "/service",
-    name: "Service",
-    component: () => import("../views/Service.vue"),
   },
   {
     path: "/changepassword",

@@ -63,7 +63,6 @@ export default {
           message: u.message,
         });
       }
-      // console.log(u);
     },
     returnRef() {
       history.back(-1);

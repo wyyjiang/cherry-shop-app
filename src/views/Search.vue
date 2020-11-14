@@ -55,12 +55,10 @@ export default {
       } else {
         await get("/api/public/v1/goods/qsearch", { query: this.input }).then(
           (res) => {
-            // console.log(res.data.message);
             this.list = res.data.message;
           }
         );
       }
-      console.log(this.list);
     },
     toDetail(id) {
       this.$router.push({

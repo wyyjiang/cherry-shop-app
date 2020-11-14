@@ -5,7 +5,6 @@
     </div>
     <div class="change">
       <div>
-        <!-- <van-uploader :after-read="afterRead" /> -->
         <div>
           <el-avatar
             src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2116474643,2614414860&fm=26&gp=0.jpg"
@@ -92,11 +91,6 @@ export default {
     },
     toAboutUs() {
       this.$router.push({ name: "AboutUs" });
-    },
-    afterRead(file) {
-      // 此时可以自行将文件上传至服务器
-      console.log(file);
-      console.log(2);
     },
     onclick() {
       removeToken();

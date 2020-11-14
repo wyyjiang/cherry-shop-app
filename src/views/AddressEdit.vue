@@ -41,9 +41,7 @@ export default {
     },
     onSave(save) {
       Toast.success("保存成功");
-      console.log(save);
       const uid = getToken();
-      console.log(uid);
       addAddressAPI(
         uid,
         save.name,
@@ -54,11 +52,7 @@ export default {
         save.county,
         save.isDefault
       );
-      // if (this.$route.query) {
       this.$router.go(-1);
-      // } else {
-      //   this.$router.replace({ name: "AddressList" });
-      // }
     },
     onDelete() {
       Toast("delete");
