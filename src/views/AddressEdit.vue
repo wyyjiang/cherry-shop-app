@@ -3,7 +3,7 @@
     <div class="top">
       <van-nav-bar
         class="addressedit_main"
-        title="地址修改"
+        title="地址新增"
         left-arrow
         @click-left="returnRef"
       ></van-nav-bar>
