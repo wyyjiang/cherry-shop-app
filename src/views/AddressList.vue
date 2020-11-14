@@ -47,16 +47,20 @@ export default {
       history.back(-1);
     },
     onAdd() {
-      Toast("新增地址");
       this.$router.push({
         name: "AddressEdit",
       });
     },
     onEdit(item, index) {
-      Toast("删除地址:" + index);
+      Toast("删除成功！");
       const uid = getToken();
       delAddressAPI(uid, index);
       this.list.splice(index, 1);
+      if (this.list.length > 0) {
+        this.isEmpty = false;
+      } else {
+        this.isEmpty = true;
+      }
     },
     onClickLeft() {
       history.back(-1);

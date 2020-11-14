@@ -54,7 +54,11 @@ export default {
         save.county,
         save.isDefault
       );
-      this.$router.replace({ name: "AddressList" });
+      // if (this.$route.query) {
+      this.$router.go(-1);
+      // } else {
+      //   this.$router.replace({ name: "AddressList" });
+      // }
     },
     onDelete() {
       Toast("delete");
