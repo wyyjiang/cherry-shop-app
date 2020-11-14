@@ -148,28 +148,13 @@ export default {
     },
     delProduct(id) {
       deleteCartAPI(getToken(), id);
-      // 获取用户的购物车列表
-      const cart_list = searchCartAPI(getToken());
-      // 判断购物车列表是否为空
-      const cart_list_arr = Object.keys(cart_list);
-      const cart_list_length = cart_list_arr.length;
-      if (cart_list_length == 0) {
+      const index = this.carts.findIndex((item) => item.goods_id == id);
+      this.carts.splice(index, 1);
+      if (this.carts.length == 0) {
         this.isEmpty = true;
       } else {
         this.isEmpty = false;
       }
-      // 获取商品信息
-      let arr = [];
-      cart_list_arr.map((item) => {
-        get("/api/public/v1/goods/detail", { goods_id: item }).then((res) => {
-          arr.push({
-            ...res.data.message,
-            checked: false,
-            goods_num: cart_list[item],
-          });
-        });
-      });
-      this.carts = arr;
       Toast.success("删除商品成功！");
     },
     minus(id) {
