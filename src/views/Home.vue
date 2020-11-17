@@ -2,7 +2,7 @@
   <div class="home">
     <div class="header">
       <div class="header_main">Cherry商城</div>
-      <van-icon name="user-circle-o" @click="toUser" />
+      <van-icon class="icon_user" name="user-circle-o" @click="toUser" />
     </div>
     <div class="search">
       <div class="search_input" @click="toSearch">
@@ -234,5 +234,8 @@ export default {
   width: 47%;
   height: 44%;
   margin: 2px;
+}
+.icon_user {
+  margin-right: 10px;
 }
 </style>

@@ -41,7 +41,7 @@
           </van-button>
         </div>
       </van-form>
-      <router-link :to="{ name: 'Login' }">已有账号,我要登录</router-link>
+      <router-link :to="{ name: 'Login' }" class="a_color">已有账号,我要登录</router-link>
     </div>
   </div>
 </template>
@@ -101,5 +101,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.a_color{
+  color: darkslategrey;
 }
 </style>

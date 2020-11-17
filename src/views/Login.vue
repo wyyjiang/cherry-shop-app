@@ -33,7 +33,7 @@
           </van-button>
         </div>
       </van-form>
-      <router-link :to="{ name: 'Reg' }">没有账号,我要注册</router-link>
+      <router-link :to="{ name: 'Reg' }" class="a_color">没有账号,我要注册</router-link>
     </div>
   </div>
 </template>
@@ -85,5 +85,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.a_color{
+  color: darkslategrey;
 }
 </style>
